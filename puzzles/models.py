@@ -11,17 +11,19 @@ class SudokuPuzzle(models.Model):
     )
 
     grid = models.CharField(max_length=81)
-    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True),
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     difficulty = models.IntegerField(choices=DIFFICULTIES, default=0)
     instances_created = models.IntegerField(default=0)
     instances_completed = models.IntegerField(default=0)
 
     def __str__(self):
+        username = self.created_by.username if self.created_by else 'Deleted'
         return f'''
-            Puzzle {self.id} created by {self.created_by.username}
+            Puzzle {self.id} created by {username}
             on {self.created_on}
             '''
+        
     
 class PuzzleInstance(models.Model):
     puzzle = models.ForeignKey(

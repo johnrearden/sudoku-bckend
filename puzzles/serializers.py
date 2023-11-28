@@ -8,10 +8,10 @@ class SudokuPuzzleSerializer(serializers.ModelSerializer):
 
     def get_is_owner(self, obj):
         request = self.context['request']
-        return request.uwer == obj.IsOwnerOrReadOnly
+        return request.user == obj.created_by
 
     class Meta:
         model = SudokuPuzzle
-        fields = ['id', 'created_by', 'created_on', 'difficulty',
+        fields = ['id', 'grid', 'created_on', 'difficulty',
                   'instances_created', 'instances_completed', 'creator',
                   'is_owner',]

@@ -3,6 +3,7 @@ from puzzles import views
 
 urlpatterns = [
     path('sudoku_puzzles/', views.SudokuPuzzlesList.as_view()),
-    # 
-    # path('sudoku_puzzles/<int:pk>/', views.SudokuPuzzlesDetail.as_view()),
+    path('sudoku_puzzles/<int:pk>/', views.SudokuPuzzleDetail.as_view()),
+    path('create_new_puzzle_instance/<int:difficulty>/',
+         views.CreateNewPuzzleInstance.as_view()),
 ]
