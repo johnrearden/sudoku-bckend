@@ -7,7 +7,7 @@ from .models import Profile
 from .serializers import ProfileSerializer
 from sudoku_bckend.permissions import IsOwnerOrReadOnly
 
-class ProfileDetail(generic.ListView):
+class ProfileDetail(generics.RetrieveUpdateAPIView):
     serializer_class = ProfileSerializer
     permission_classes = [IsOwnerOrReadOnly]
-    queryset = Profiles.objects.all()
+    queryset = Profile.objects.all()

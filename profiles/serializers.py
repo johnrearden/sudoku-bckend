@@ -4,11 +4,11 @@ from .models import Profile
 
 class ProfileSerializer(serializers.ModelSerializer):
 
-    is_owner = serialzers.SerializerMethodField()
+    is_owner = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
         request = self.context['request']
-        return self.owner == request.user
+        return obj.owner == request.user
 
     class Meta:
         model = Profile
