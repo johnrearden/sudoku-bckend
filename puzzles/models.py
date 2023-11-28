@@ -28,7 +28,7 @@ class SudokuPuzzle(models.Model):
 class PuzzleInstance(models.Model):
     puzzle = models.ForeignKey(
         SudokuPuzzle, on_delete=models.CASCADE, related_name="instances")
-    user = models.ForeignKey(
+    owner = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="puzzle_instances")
     grid = models.CharField(max_length=81)
     started_on = models.DateTimeField(auto_now_add=True)
@@ -36,5 +36,5 @@ class PuzzleInstance(models.Model):
     completed = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.user.username}\'s puzzle ({self.id})'
+        return f'{self.owner.username}\'s puzzle ({self.id})'
     
