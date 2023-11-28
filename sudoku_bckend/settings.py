@@ -60,7 +60,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = 'DEBUG' in os.environ
 
 ALLOWED_HOSTS = [
-    '8000-johnrearden-sudokubcken-3s9vbsaqqq0.ws-eu106.gitpod.io'
+    '8000-johnrearden-sudokubcken-3s9vbsaqqq0.ws-eu106.gitpod.io',
+    'sudoku-toy-843c4b4834cb.herokuapp.com'
 ]
 
 
