@@ -56,13 +56,25 @@ class CreateNewPuzzleInstance(APIView):
                 data={'message': (f'You\'ve tried all the puzzles at that difficulty level!')}
             )
 
-
-
-        ids = [puzzle.id for puzzle in unused_puzzles]
-        message = {
-            'unused puzzles by id : ': ids
-        }
-
-        return JsonResponse(message, safe=False)
-
     
+class GetRandomExistingInstance(APIView):
+    def get(self, request, difficulty):
+        choices = SudokuPuzzle.objects.filter(difficulty=difficulty)
+        original_puzzle = choice(choices)
+
+        if original_puzzle:
+            instance = PuzzleInstance.objects.create(
+                puzzle=original_puzzle,
+                owner=request.user,
+                grid=original_puzzle.grid,
+            )
+            instance.save()
+            serializer = PuzzleInstanceSerializer(
+                instance, 
+                context={'request': request})
+            return Response(serializer.data)
+        else:
+            return Response(
+                status=status.HTTP_404_NOT_FOUND,
+                data={'message': ('No puzzles at that difficulty level in DB')}
+            )
