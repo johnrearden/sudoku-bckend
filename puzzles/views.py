@@ -60,9 +60,10 @@ class CreateNewPuzzleInstance(APIView):
 class GetRandomExistingInstance(APIView):
     def get(self, request, difficulty):
         choices = SudokuPuzzle.objects.filter(difficulty=difficulty)
-        original_puzzle = choice(choices)
+        
 
-        if original_puzzle:
+        if choices:
+            original_puzzle = choice(choices)
             instance = PuzzleInstance.objects.create(
                 puzzle=original_puzzle,
                 owner=request.user,
