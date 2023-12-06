@@ -8,6 +8,8 @@ from .models import SudokuPuzzle, PuzzleInstance
 from .serializers import SudokuPuzzleSerializer, PuzzleInstanceSerializer
 from sudoku_bckend.permissions import IsOwnerOrReadOnly
 
+from datetime import datetime
+
 
 class SudokuPuzzlesList(generics.ListCreateAPIView):
     serializer_class = SudokuPuzzleSerializer
@@ -57,21 +59,18 @@ class CreateNewPuzzleInstance(APIView):
             )
 
     
-class GetRandomExistingInstance(APIView):
+class GetRandomPuzzle(APIView):
+
+    http_method_names = ['get']
+
     def get(self, request, difficulty):
         choices = SudokuPuzzle.objects.filter(difficulty=difficulty)
         
         if choices:
             owner = None if request.user.is_anonymous else request.user
-            original_puzzle = choice(choices)
-            instance = PuzzleInstance.objects.create(
-                puzzle=original_puzzle,
-                owner=owner,
-                grid=original_puzzle.grid,
-            )
-            instance.save()
-            serializer = PuzzleInstanceSerializer(
-                instance, 
+            puzzle = choice(choices)
+            serializer = SudokuPuzzleSerializer(
+                puzzle,
                 context={'request': request})
             return Response(serializer.data)
         else:
@@ -79,3 +78,16 @@ class GetRandomExistingInstance(APIView):
                 status=status.HTTP_404_NOT_FOUND,
                 data={'message': ('No puzzles at that difficulty level in DB')}
             )
+
+    def put(self, request, difficulty):
+        serializer = PuzzleInstanceSerializer(
+            data=request.data,
+            context={'request': request}
+            )
+        if serializer.is_valid():
+            serializer.save(
+                owner=None if request.user.is_anonymous else request.user,
+                completed_at=datetime.now())
+        return Response(
+            status=status.HTTP_200_OK
+        )
