@@ -29,7 +29,10 @@ class PuzzleInstance(models.Model):
     puzzle = models.ForeignKey(
         SudokuPuzzle, on_delete=models.CASCADE, related_name="instances")
     owner = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="puzzle_instances")
+        User,
+        null=True,
+        on_delete=models.CASCADE,
+        related_name="puzzle_instances")
     grid = models.CharField(max_length=81)
     started_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)

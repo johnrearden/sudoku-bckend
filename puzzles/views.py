@@ -61,12 +61,12 @@ class GetRandomExistingInstance(APIView):
     def get(self, request, difficulty):
         choices = SudokuPuzzle.objects.filter(difficulty=difficulty)
         
-
         if choices:
+            owner = None if request.user.is_anonymous else request.user
             original_puzzle = choice(choices)
             instance = PuzzleInstance.objects.create(
                 puzzle=original_puzzle,
-                owner=request.user,
+                owner=owner,
                 grid=original_puzzle.grid,
             )
             instance.save()
