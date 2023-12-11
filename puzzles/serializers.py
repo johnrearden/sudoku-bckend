@@ -24,17 +24,11 @@ class SudokuPuzzleSerializer(serializers.ModelSerializer):
 
 class PuzzleInstanceSerializer(serializers.ModelSerializer):
 
-    is_owner = serializers.SerializerMethodField()
     original = serializers.ReadOnlyField(source='puzzle.grid')
     difficulty = serializers.ReadOnlyField(source='puzzle.get_difficulty_display')
     owner_name = serializers.ReadOnlyField(source='owner.username')
 
-    def get_is_owner(self, obj):
-        request = self.context['request']
-        return request.user == obj.owner
-
     class Meta:
         model = PuzzleInstance
         fields = ['id', 'puzzle', 'owner', 'owner_name', 'grid', 'original', 
-        'started_on', 'last_modified', 'completed', 'difficulty', 'is_owner',
-        'completed_at']
+        'started_on', 'completed', 'difficulty', 'completed_at', 'time_taken']

@@ -10,5 +10,6 @@ urlpatterns = [
          views.GetRandomPuzzle.as_view()),
     path('puzzle_instance/<int:pk>/',
          views.GetPuzzleInstance.as_view()),
-    
+    path('create_puzzle_instance/',
+          views.CreatePuzzleInstance.as_view()),
 ]

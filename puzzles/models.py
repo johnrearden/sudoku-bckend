@@ -33,11 +33,16 @@ class PuzzleInstance(models.Model):
         on_delete=models.CASCADE,
         related_name="puzzle_instances")
     grid = models.CharField(max_length=81)
-    started_on = models.DateTimeField(auto_now_add=True)
-    last_modified = models.DateTimeField(auto_now=True)
+    started_on = models.DateTimeField()
     completed = models.BooleanField(default=False)
-    completed_at = models.DateTimeField(null=True)
+    completed_at = models.DateTimeField()
+    time_taken = models.DurationField(null=True)
 
     def __str__(self):
         return f'{self.owner.username}\'s puzzle ({self.id})'
+
+    def save(self, *args, **kwargs):
+        timedelta = self.completed_at - self.started_on
+        self.time_taken = timedelta
+        super().save(*args, **kwargs)
     

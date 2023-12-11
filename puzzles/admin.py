@@ -15,7 +15,7 @@ class SudokuPuzzleAdmin(admin.ModelAdmin):
 @admin.register(PuzzleInstance)
 class PuzzleInstanceAdmin(admin.ModelAdmin):
     list_display = ('id', 'puzzle', 'owner', 'difficulty', 'grid', 'started_on',
-                    'last_modified', 'completed',)
+                    'completed',)
     list_editable = ('puzzle', 'owner', 'grid', 'completed',)
 
     def difficulty(self, obj):

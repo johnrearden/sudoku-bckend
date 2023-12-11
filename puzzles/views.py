@@ -1,5 +1,5 @@
 from django.http import Http404, JsonResponse
-from rest_framework import status, generics, permissions
+from rest_framework import status, generics, permissions, filters
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -16,6 +16,20 @@ class SudokuPuzzlesList(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAdminUser]
     queryset = SudokuPuzzle.objects.all()
 
+    filter_backends = [
+        filters.OrderingFilter,
+        filters.SearchFilter,
+    ]
+
+    filterset_fields = [
+        'created_by',
+        'difficulty',
+    ]
+
+    search_fields = [
+        'difficulty',
+    ]
+
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 
@@ -30,6 +44,18 @@ class GetPuzzleInstance(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PuzzleInstanceSerializer
     permission_classes = [IsOwnerOrReadOnly]
     queryset = PuzzleInstance.objects.all()
+
+
+class CreatePuzzleInstance(generics.CreateAPIView):
+    serializer_class = PuzzleInstanceSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    # def perform_create(self, serializer):
+    #     print(serializer.data)
+    #     data = serializer.data
+    #     timedelta = data['completed_at'] - data['started_on']
+    #     serializer.timetaken = timedelta
+    #     serializer.save(timetaken = completed_at - started_on)
 
 
 class CreateNewPuzzleInstance(APIView):
@@ -78,16 +104,3 @@ class GetRandomPuzzle(APIView):
                 status=status.HTTP_404_NOT_FOUND,
                 data={'message': ('No puzzles at that difficulty level in DB')}
             )
-
-    def put(self, request, difficulty):
-        serializer = PuzzleInstanceSerializer(
-            data=request.data,
-            context={'request': request}
-            )
-        if serializer.is_valid():
-            serializer.save(
-                owner=None if request.user.is_anonymous else request.user,
-                completed_at=datetime.now())
-        return Response(
-            status=status.HTTP_200_OK
-        )
