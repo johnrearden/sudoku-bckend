@@ -38,6 +38,11 @@ class PuzzleInstance(models.Model):
     completed_at = models.DateTimeField()
     time_taken = models.DurationField(null=True)
 
+    class Meta:
+        indexes = [
+            models.Index(fields=["time_taken"])
+        ]
+
     def __str__(self):
         return f'{self.owner.username}\'s puzzle ({self.id})'
 

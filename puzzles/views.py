@@ -50,43 +50,8 @@ class CreatePuzzleInstance(generics.CreateAPIView):
     serializer_class = PuzzleInstanceSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    # def perform_create(self, serializer):
-    #     print(serializer.data)
-    #     data = serializer.data
-    #     timedelta = data['completed_at'] - data['started_on']
-    #     serializer.timetaken = timedelta
-    #     serializer.save(timetaken = completed_at - started_on)
 
-
-class CreateNewPuzzleInstance(APIView):
-    def get(self, request, difficulty):
-        instances = PuzzleInstance.objects.filter(owner=request.user)
-        instances = instances.filter(puzzle__difficulty=difficulty)
-        print(instances)
-        used_puzzles = {instance.puzzle.id for instance in instances}
-        unused_puzzles = SudokuPuzzle.objects.filter(difficulty=difficulty)
-        unused_puzzles = unused_puzzles.exclude(id__in=used_puzzles)
-
-        if unused_puzzles:
-            # Select a puzzle at random from unused puzzles
-            sudoku_puzzle = choice(unused_puzzles)
-            instance = PuzzleInstance(
-                puzzle=sudoku_puzzle,
-                owner=request.user,
-                grid=sudoku_puzzle.grid,
-            )
-            instance.save()
-            serializer = PuzzleInstanceSerializer(instance, context={'request': request})
-            return Response(serializer.data)
-        else:
-            return Response(
-                status=status.HTTP_409_CONFLICT,
-                data={'message': (f'You\'ve tried all the puzzles at that difficulty level!')}
-            )
-
-    
 class GetRandomPuzzle(APIView):
-
     http_method_names = ['get']
 
     def get(self, request, difficulty):
@@ -106,3 +71,28 @@ class GetRandomPuzzle(APIView):
                 status=status.HTTP_404_NOT_FOUND,
                 data={'message': ('No puzzles at that difficulty level in DB')}
             )
+
+
+class GetLeaderboard(APIView):
+    '''
+    A view that returns this instances position in the rankings for its 
+    puzzle, the top 3 in the rankings, and the nearest 4 neighbours (2 above
+    and 2 below)
+    '''
+
+    def get(self, request, instance_id):
+        instance = PuzzleInstance.objects.filter(id=instance_id).first()
+        index = PuzzleInstance.objects.filter(time_taken__lt=instance.time_taken).count()
+        rankings = PuzzleInstance.objects.order_by('time_taken')[:5]
+        
+        top_n_serializer = PuzzleInstanceSerializer(
+            rankings, many=True
+        )
+        instance_serializer = PuzzleInstanceSerializer(instance)
+        data = {
+            'puzzle_instance': instance_serializer.data,
+            'ranking': index,
+            'top_n': top_n_serializer.data
+        }
+
+        return Response(data)
