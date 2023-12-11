@@ -45,4 +45,9 @@ class PuzzleInstance(models.Model):
         timedelta = self.completed_at - self.started_on
         self.time_taken = timedelta
         super().save(*args, **kwargs)
+
+        # Update the Puzzle model
+        puzzle = SudokuPuzzle.objects.get(id=self.puzzle.id)
+        puzzle.instances_completed += 1
+        puzzle.save()
     

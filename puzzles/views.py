@@ -98,6 +98,8 @@ class GetRandomPuzzle(APIView):
             serializer = SudokuPuzzleSerializer(
                 puzzle,
                 context={'request': request})
+            puzzle.instances_created += 1
+            puzzle.save()
             return Response(serializer.data)
         else:
             return Response(
