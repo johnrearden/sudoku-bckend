@@ -8,7 +8,7 @@ class Profile(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     nickname = models.CharField(max_length=16, null=True, blank=True)
     avatar = models.ImageField(
-        upload_to='images/', default='default.avatar', blank=True)
+        upload_to='images/', default='default_profile_ktdivp', blank=True)
     country = models.CharField(max_length=2, default="IE")
 
     def __str__(self):
