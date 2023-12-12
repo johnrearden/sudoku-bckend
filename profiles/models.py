@@ -9,6 +9,7 @@ class Profile(models.Model):
     nickname = models.CharField(max_length=16, null=True, blank=True)
     avatar = models.ImageField(
         upload_to='images/', default='default.avatar', blank=True)
+    country = models.CharField(max_length=2, default="IE")
 
     def __str__(self):
         return f'{self.owner.username}, ({self.nickname}) since {self.created_on}'
