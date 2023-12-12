@@ -28,7 +28,13 @@ class PuzzleInstanceSerializer(serializers.ModelSerializer):
     difficulty = serializers.ReadOnlyField(source='puzzle.get_difficulty_display')
     owner_name = serializers.ReadOnlyField(source='owner.username')
 
+    country = serializers.SerializerMethodField()
+
+    def get_country(self, obj):
+        return obj.owner.profile.country
+
     class Meta:
         model = PuzzleInstance
         fields = ['id', 'puzzle', 'owner', 'owner_name', 'grid', 'original', 
-        'started_on', 'completed', 'difficulty', 'completed_at', 'time_taken']
+                  'started_on', 'completed', 'difficulty', 'completed_at',
+                  'time_taken', 'country']
