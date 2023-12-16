@@ -12,6 +12,7 @@ import styles from '../../styles/PuzzleContainer.module.css'
 import { LCLSTRG_KEY } from '../../constants/constants';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import Timer from '../../components/Timer';
+import { solvePuzzle } from '../../utils/solver';
 
 
 const PuzzleContainer = () => {
@@ -36,7 +37,6 @@ const PuzzleContainer = () => {
 
     // The cell that duplicated the value of the current selected cell.
     const [clashingCell, setClashingCell] = useState(-1);
-
 
     const [undoStack, setUndoStack] = useState([]);
 
@@ -175,6 +175,10 @@ useEffect(() => {
     }
 }, [completeness, currentUser, puzzleData, history]) 
 
+const solve = () => {
+    solvePuzzle(puzzleData.grid);
+}
+
 // Set success message style
 const successStyle = 
     completeness === 100 
@@ -217,6 +221,11 @@ return (
                 className={`${btnStyles.Button} mx-2`}
                 onClick={handleUndo}>
                 <i className="fa-solid fa-arrow-rotate-left"></i>
+            </Button>
+            <Button
+                className={`${btnStyles.Button} mx-2`}
+                onClick={solve}>
+                Solve
             </Button>
         </Row>
 

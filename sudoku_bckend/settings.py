@@ -64,6 +64,7 @@ ALLOWED_HOSTS = [
     'sudoku-toy-843c4b4834cb.herokuapp.com',
     os.environ.get('ALLOWED_HOST'),
     'localhost',
+    '8000-johnrearden-sudokubcken-a1vim0dmayo.ws-eu107.gitpod.io',
 ]
 
 
