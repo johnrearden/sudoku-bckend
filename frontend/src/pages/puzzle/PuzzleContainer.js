@@ -13,6 +13,7 @@ import { LCLSTRG_KEY } from '../../constants/constants';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import Timer from '../../components/Timer';
 import { solvePuzzle } from '../../utils/solver';
+import { checkNonets } from '../../utils/solver';
 
 
 const PuzzleContainer = () => {
@@ -127,6 +128,9 @@ useEffect(() => {
             history.push('/');
         }
     }
+
+    checkNonets([]);
+
     const previousPuzzle = window.localStorage.getItem(LCLSTRG_KEY);
     if (previousPuzzle) {
         const puzzleData = JSON.parse(previousPuzzle);
@@ -175,8 +179,16 @@ useEffect(() => {
     }
 }, [completeness, currentUser, puzzleData, history]) 
 
-const solve = () => {
-    solvePuzzle(puzzleData.grid);
+const callback = (grid) => {
+    console.log('callback invoked');
+    setPuzzleData(prev => ({
+        ...prev,
+        grid: grid,
+    }));
+}
+
+const handleSolve = () => {
+    solvePuzzle(puzzleData.grid, callback);
 }
 
 // Set success message style
@@ -224,7 +236,7 @@ return (
             </Button>
             <Button
                 className={`${btnStyles.Button} mx-2`}
-                onClick={solve}>
+                onClick={handleSolve}>
                 Solve
             </Button>
         </Row>
