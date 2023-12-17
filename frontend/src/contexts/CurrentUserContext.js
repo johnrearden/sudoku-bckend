@@ -38,7 +38,7 @@ export const CurrentUserProvider = ({ children }) => {
                     try {
                         await axios.post('/dj-rest-auth/token/refresh/')
                     } catch (err) {
-                        alert(`error posting refresh token in axiosReq ${err}`);
+                        //alert(`error posting refresh token in axiosReq ${err}`);
                         setCurrentUser(prevCurrentUser => {
                             if (prevCurrentUser) {
                                 history.push('/signin');
@@ -59,12 +59,12 @@ export const CurrentUserProvider = ({ children }) => {
         axiosRes.interceptors.response.use(
             (response) => response,
             async (err) => {
-                alert(`error in axiosRes : ${err}`);
+                //alert(`error in axiosRes : ${err}`);
                 if (err.response?.status === 401) {
                     try {
                         await axios.post('/dj-rest-auth/token/refresh/')
                     } catch (err) {
-                        alert(`error posting refresh token in axiosRes ${err}`);
+                        //alert(`error posting refresh token in axiosRes ${err}`);
                         setCurrentUser(prevCurrentUser => {
                             if (prevCurrentUser) {
                                 history.push('/signin');

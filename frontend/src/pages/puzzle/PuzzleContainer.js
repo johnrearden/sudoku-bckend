@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom'
 import { axiosReq } from '../../api/axiosDefaults';
 import { Button, Col, Container, Row } from 'react-bootstrap';
@@ -13,7 +13,6 @@ import { LCLSTRG_KEY } from '../../constants/constants';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import Timer from '../../components/Timer';
 import { solvePuzzle } from '../../utils/solver';
-import { checkNonets } from '../../utils/solver';
 
 
 const PuzzleContainer = () => {
@@ -129,7 +128,7 @@ useEffect(() => {
         }
     }
 
-    checkNonets([]);
+    
 
     const previousPuzzle = window.localStorage.getItem(LCLSTRG_KEY);
     if (previousPuzzle) {
@@ -187,9 +186,10 @@ const callback = (grid) => {
     }));
 }
 
-const handleSolve = () => {
+const handleSolve = useCallback(() => {
+    console.log(puzzleData.grid, 'source')
     solvePuzzle(puzzleData.grid, callback);
-}
+}, [puzzleData]);
 
 // Set success message style
 const successStyle = 
