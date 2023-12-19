@@ -7,6 +7,7 @@ import NoteCell from './NoteCell'
 const Puzzle = ({ 
     grid, 
     searchArray,
+    showNotes,
     selectedCell, 
     handleCellSelection, 
     warningGroup, 
@@ -25,7 +26,21 @@ const Puzzle = ({
                 correct={completed}
                 handleSelection={handleCellSelection}/>
         ) : (
-            <NoteCell array={searchArray[idx]} key={idx}/>
+            showNotes ? (
+                <NoteCell array={searchArray[idx]} key={idx}/>
+            ) :
+            (
+                <PuzzleCell
+                    key={idx}
+                    value={char}
+                    index={idx}
+                    selected={idx===selectedCell}
+                    warning={warningGroup.includes(idx)}
+                    illegal={idx===clashingCell}
+                    correct={completed}
+                    handleSelection={handleCellSelection}/>
+            )
+            
         )
     ))
 

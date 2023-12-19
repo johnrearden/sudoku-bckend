@@ -8,13 +8,13 @@ const NoteCell = ({ array }) => {
         const char = i.toString();
         if (array.includes(char)) {
             digits.push (
-                <span className={styles.Digit}>
+                <span className={styles.Digit} key={i}>
                     {char}
                 </span>
             )
         } else {
             digits.push(
-                <span></span>
+                <span key={i}></span>
             )
         }
     }

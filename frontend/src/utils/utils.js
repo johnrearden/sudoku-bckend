@@ -161,3 +161,7 @@ export const millisToTimeString = (time) => {
     secs = Math.floor(secs - minutes * 60);
     return `${hourString}${String(minutes).padStart(1, '0')}:${String(secs).padStart(2, '0')}`;
 }
+
+export const arraysHaveSameItems = (array1, array2) => {
+    return JSON.stringify(array1) === JSON.stringify(array2);
+}

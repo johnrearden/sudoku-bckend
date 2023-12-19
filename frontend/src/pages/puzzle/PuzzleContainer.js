@@ -41,6 +41,12 @@ const PuzzleContainer = () => {
 
     const [undoStack, setUndoStack] = useState([]);
 
+    const [showNotes, setShowNotes] = useState(true);
+
+    const toggleNotes = () => {
+        setShowNotes(!showNotes);
+    }
+
     // Tests if a digit is valid in the current selected cell, and displays
     // the warnings if not.
     const performValidityCheck = (digit) => {
@@ -132,7 +138,7 @@ useEffect(() => {
     
 
     const previousPuzzle = window.localStorage.getItem(LCLSTRG_KEY);
-    if (previousPuzzle) {
+    if (previousPuzzle && false) {
         const puzzleData = JSON.parse(previousPuzzle);
         setPuzzleData(puzzleData);
     } else {
@@ -216,6 +222,7 @@ return (
             <Puzzle
                 grid={puzzleData?.grid}
                 searchArray={searchArray}
+                showNotes={showNotes}
                 selectedCell={selectedCellIndex}
                 handleCellSelection={handleCellSelection}
                 warningGroup={warningGroup}
@@ -241,6 +248,11 @@ return (
                 className={`${btnStyles.Button} mx-2`}
                 onClick={handleSolve}>
                 Solve
+            </Button>
+            <Button
+                className={`${btnStyles.Button} mx-2`}
+                onClick={toggleNotes}>
+                    Notes
             </Button>
         </Row>
 
