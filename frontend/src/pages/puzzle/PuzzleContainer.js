@@ -12,7 +12,7 @@ import styles from '../../styles/PuzzleContainer.module.css'
 import { LCLSTRG_KEY } from '../../constants/constants';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import Timer from '../../components/Timer';
-import { solvePuzzle } from '../../utils/solver';
+import { createSearchArray, solvePuzzle } from '../../utils/solver';
 
 
 const PuzzleContainer = () => {
@@ -21,6 +21,7 @@ const PuzzleContainer = () => {
     const [puzzleData, setPuzzleData] = useState({
         grid: Array(82).join('-')
     });
+    const [searchArray, setSearchArray] = useState(() => createSearchArray());
     const [completeness, setCompleteness] = useState(0);
 
     // Digits already placed 9 times in the puzzle
@@ -178,18 +179,19 @@ useEffect(() => {
     }
 }, [completeness, currentUser, puzzleData, history]) 
 
-const callback = (grid) => {
+const callback = (grid, newSearchArray) => {
     console.log('callback invoked');
     setPuzzleData(prev => ({
         ...prev,
         grid: grid,
     }));
+    setSearchArray(newSearchArray);
 }
 
 const handleSolve = useCallback(() => {
     console.log(puzzleData.grid, 'source')
-    solvePuzzle(puzzleData.grid, callback);
-}, [puzzleData]);
+    solvePuzzle(puzzleData.grid, searchArray, callback);
+}, [puzzleData, searchArray]);
 
 // Set success message style
 const successStyle = 
@@ -213,6 +215,7 @@ return (
         <Row className="d-flex justify-content-center mt-4 position-relative">
             <Puzzle
                 grid={puzzleData?.grid}
+                searchArray={searchArray}
                 selectedCell={selectedCellIndex}
                 handleCellSelection={handleCellSelection}
                 warningGroup={warningGroup}

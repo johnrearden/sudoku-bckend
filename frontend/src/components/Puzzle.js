@@ -2,9 +2,11 @@ import React from 'react'
 import PuzzleCell from './PuzzleCell'
 import styles from '../styles/Puzzle.module.css'
 import { Row } from 'react-bootstrap'
+import NoteCell from './NoteCell'
 
 const Puzzle = ({ 
     grid, 
+    searchArray,
     selectedCell, 
     handleCellSelection, 
     warningGroup, 
@@ -12,15 +14,19 @@ const Puzzle = ({
     completed }) => {
 
     const cells = grid?.split("").map((char, idx) => (
-        <PuzzleCell
-            key={idx}
-            value={char}
-            index={idx}
-            selected={idx===selectedCell}
-            warning={warningGroup.includes(idx)}
-            illegal={idx===clashingCell}
-            correct={completed}
-            handleSelection={handleCellSelection}/>
+        char !== '-' ? (
+            <PuzzleCell
+                key={idx}
+                value={char}
+                index={idx}
+                selected={idx===selectedCell}
+                warning={warningGroup.includes(idx)}
+                illegal={idx===clashingCell}
+                correct={completed}
+                handleSelection={handleCellSelection}/>
+        ) : (
+            <NoteCell array={searchArray[idx]} key={idx}/>
+        )
     ))
 
     return (

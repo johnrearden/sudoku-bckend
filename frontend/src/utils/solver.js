@@ -8,21 +8,21 @@ import {
     nonets
 } from "../constants/nonets";
 
-export const solvePuzzle = (currentGrid, callback) => {
+export const solvePuzzle = (currentGrid, searchArrayOriginal, callback) => {
 
-    // Create a copy of the grid, to avoid mutating state directly.
+    // Create a copy of the grid and searchArray, to avoid mutating state directly.
     let grid = currentGrid.slice();
+
+    const searchArray = searchArrayOriginal.map((array) => [...array])
+    console.log(searchArray);
 
     // Create array listing unsolved cells
     //const unsolvedIndices = new Array(81).fill(true);
 
-    // Create search array
-    const searchArray = new Array(81);
     for (let i = 0; i < 81; i++) {
-        searchArray[i] = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
-    }
-
-    for (let i = 0; i < 81; i++) {
+        if (grid.charAt(i) !== '-') {
+            searchArray[i] = [];
+        }
         if (searchArray[i].length === 0) {
             continue;
         }
@@ -44,7 +44,7 @@ export const solvePuzzle = (currentGrid, callback) => {
             grid = replaceCharAt(grid, i, searchArray[i][0]);
             console.log('process of elimination, putting', searchArray[i][0], 'in', i);
             console.log(grid);
-            callback(grid);
+            callback(grid, searchArray);
             return;
         } else {
             console.log('No progress with method 1');
@@ -116,11 +116,21 @@ export const solvePuzzle = (currentGrid, callback) => {
                 const cell = lastOccurence[digit];
                 console.log(digit, 'only occurs once in cell', cell, 'returning');
                 grid = replaceCharAt(grid, cell, digit);
-                callback(grid);
+                callback(grid, searchArray);
                 return;
             }
         }
     }
 
     console.log('No progress with method 2..............................');
+
+    console.log(searchArray);
+}
+
+export const createSearchArray = () => {
+    const searchArray = new Array(81);
+    for (let i = 0; i < 81; i++) {
+        searchArray[i] = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    }
+    return searchArray;
 }
