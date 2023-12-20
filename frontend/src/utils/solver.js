@@ -8,6 +8,7 @@ import {
 import {
     nonets
 } from "../constants/nonets";
+import { hiddenPairs } from "./strategies/hiddenPairs";
 
 export const solvePuzzle = (currentGrid, searchArrayOriginal, callback) => {
 
@@ -16,7 +17,7 @@ export const solvePuzzle = (currentGrid, searchArrayOriginal, callback) => {
 
     const searchArray = searchArrayOriginal.map((array) => [...array])
 
-
+    hiddenPairs(grid, searchArray, callback);
 
     // Create array listing unsolved cells
     //const unsolvedIndices = new Array(81).fill(true);
@@ -47,10 +48,7 @@ export const solvePuzzle = (currentGrid, searchArrayOriginal, callback) => {
             console.log('process of elimination, putting', searchArray[i][0], 'in', i);
             //console.log(grid);
             callback(grid, searchArray);
-            return;
-        } else {
-            console.log('No progress with method 1');
-        }
+        } 
     }
 
     //return;
@@ -126,11 +124,13 @@ export const solvePuzzle = (currentGrid, searchArrayOriginal, callback) => {
 
     console.log('No progress with method 2..............................');
 
-    rowsInSquares(grid, searchArray, callback);
+    //rowsInSquares(grid, searchArray, callback);
 
-    colsInSquares(grid, searchArray, callback);
+    //colsInSquares(grid, searchArray, callback);
 
-    obviousPairs(grid, searchArray, callback);
+    //obviousPairs(grid, searchArray, callback);
+
+    
 
 
 }
@@ -185,7 +185,7 @@ export const rowsInSquares = (grid, searchArray, callback) => {
                     for (let k = 0; k < 3; k++) {
                         const cell = neighbour[0] + rowStartCell + k;
                         //console.log('cell is ', cell, ', neighbour start : ', neighbour[0], ', rowStartCell : ', rowStartCell)
-                        searchArray[cell].filter(item => item !== digit);
+                        searchArray[cell] = searchArray[cell].filter(item => item !== digit);
                         //console.log(searchArray[cell]);
                         //console.log('removing ', digit, ' from cell ', cell);
                         //console.log('rows from squares, searchArrays pruned');
@@ -211,24 +211,25 @@ export const colsInSquares = (grid, searchArray, callback) => {
         let neighbours = [];
         if (Math.floor((n - 18) / 3) === 0) {
             neighbours = [nonets[n + 3], nonets[n + 6]];
-        } else if (Math.floor(n / 3) === 1) {
+        } else if (Math.floor((n - 18) / 3) === 1) {
             neighbours = [nonets[n - 3], nonets[n + 3]];
         } else {
             neighbours = [nonets[n - 6], nonets[n - 3]];
         }
-        console.log('neightbours for  ', n, ' : ',neighbours)
+        //console.log('neighbours for  ', n, ' : ',neighbours)
 
         // Combine the searchArrays for the cells in each column.
         for (let i = 0; i < 9; i += 1) {
             const cell = square[i];
             const schArr = searchArray[cell];
+            //console.log('sArr for ', cell, ' : ', schArr);
             for (let item of schArr) {
                 cols[i % 3].add(item);
             }
         }
-        for (let col of cols) {
-            console.log(Array.from(col));
-        }
+        // for (let col of cols) {
+        //     console.log(Array.from(col));
+        // }
 
         // Find if any digits only occur in one combined searchArray
         const occurCount = Array(9).fill(0);
@@ -241,23 +242,23 @@ export const colsInSquares = (grid, searchArray, callback) => {
                     lastOccurs[i] = j;
                 }
             }
-            console.log('digit ', digit, 'appears ', occurCount[i], ' times, last in row ' + lastOccurs[i]);
-
+            //console.log('digit ', digit, 'appears ', occurCount[i], ' times, last in col ' + lastOccurs[i]);
+            
             if (occurCount[i] === 1) {
                 for (let neighbour of neighbours) {
                     const colStartCell = lastOccurs[i];
                     
                     for (let k = 0; k < 3; k++) {
                         const cell = neighbour[0] + colStartCell + (k * 9);
-                        console.log('cell is ', cell, ', neighbour start : ', neighbour[0], ', colStartCell : ', colStartCell)
-                        searchArray[cell].filter(item => item !== digit);
-                        console.log(searchArray[cell]);
-                        console.log('removing ', digit, ' from cell ', cell);
+                        //console.log('cell is ', cell, ', neighbour start : ', neighbour[0], ', colStartCell : ', colStartCell)
+                        searchArray[cell] = searchArray[cell].filter(item => item !== digit);
+                        //console.log(searchArray[cell]);
+                        //console.log('removing ', digit, ' from cell ', cell);
                         console.log('cols from squares, searchArrays pruned');
                         callback(grid, searchArray);
+                        
                     }
                 }
-
             }
         }
     }
