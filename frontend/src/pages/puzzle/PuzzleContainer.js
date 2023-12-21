@@ -13,6 +13,7 @@ import { LCLSTRG_KEY } from '../../constants/constants';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import Timer from '../../components/Timer';
 import { createSearchArray, solvePuzzle } from '../../utils/solver';
+import { bruteForce } from '../../utils/strategies/bruteForce';
 
 
 const PuzzleContainer = () => {
@@ -199,6 +200,10 @@ const handleSolve = useCallback(() => {
     solvePuzzle(puzzleData.grid, searchArray, callback);
 }, [puzzleData, searchArray]);
 
+const handleBruteForce = () => {
+    bruteForce(puzzleData.grid, searchArray, callback);
+}
+
 // Set success message style
 const successStyle = 
     completeness === 100 
@@ -248,6 +253,11 @@ return (
                 className={`${btnStyles.Button} mx-2`}
                 onClick={handleSolve}>
                 Solve
+            </Button>
+            <Button
+                className={`${btnStyles.Button} mx-2`}
+                onClick={handleBruteForce}>
+                Brute Force
             </Button>
             <Button
                 className={`${btnStyles.Button} mx-2`}
