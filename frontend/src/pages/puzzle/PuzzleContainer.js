@@ -201,7 +201,7 @@ const handleSolve = useCallback(() => {
 }, [puzzleData, searchArray]);
 
 const handleBruteForce = () => {
-    bruteForce(puzzleData.grid, searchArray, callback);
+    bruteForce(puzzleData.grid.slice(), callback);
 }
 
 // Set success message style

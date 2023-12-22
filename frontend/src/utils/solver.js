@@ -330,3 +330,43 @@ export const createSearchArray = () => {
     }
     return searchArray;
 }
+
+export const getSearchArraysFromGrid = (grid) => {
+    const searchArray = new Array(81);
+    for (let i = 0; i < 81; i++) {
+        searchArray[i] = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    }
+    for (let i = 0; i < 81; i++) {
+        if (grid.charAt(i) !== '-') {
+            searchArray[i] = [];
+        }
+        if (searchArray[i].length === 0) {
+            continue;
+        }
+        const row = getRow(i).filter((item) => item !== i);
+        const col = getColumn(i).filter((item) => item !== i);
+        const square = getSquare(i).filter((item) => item !== i);
+
+        // Get set of cellIndices in row/col/square combination
+        const concat = [...row, ...col, ...square];
+        const cellIndices = new Set(concat);
+        const existingDigits = new Set();
+        for (const index of cellIndices) {
+            const digit = grid.charAt(index);
+            existingDigits.add(digit);
+        }
+
+        searchArray[i] = searchArray[i].filter((item) => !existingDigits.has(item));
+    }
+    return searchArray;
+}
+
+export const checkGridLegality = (grid, searchArrays) => {
+    for (let i = 0; i < grid.length; i++) {
+        if (grid.charAt(i) === '-' && searchArrays[i].length === 0) {
+            console.log('searchArray for cell', i, 'is empty');
+            return false;
+        }
+    }
+    return true;
+}
