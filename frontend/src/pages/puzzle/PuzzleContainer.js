@@ -12,7 +12,7 @@ import styles from '../../styles/PuzzleContainer.module.css'
 import { LCLSTRG_KEY } from '../../constants/constants';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import Timer from '../../components/Timer';
-import { createSearchArray, solvePuzzle } from '../../utils/solver';
+import { createSearchArray, getSearchArraysFromGrid, solvePuzzle } from '../../utils/solver';
 import { bruteForce } from '../../utils/strategies/bruteForce';
 
 
@@ -129,6 +129,8 @@ useEffect(() => {
             const url = `/get_random_puzzle/${difficulty}/`;
             const { data } = await axiosReq.get(url);
             setPuzzleData(data);
+            const searchArrays = getSearchArraysFromGrid(data.grid);
+            setSearchArray(searchArrays);
 
         } catch (err) {
             console.log(err.toJSON());
