@@ -6,7 +6,7 @@ import {
     replaceCharAt
 } from "../utils";
 
-export const bruteForce = (grid, callback) => {
+export const bruteForce = async (grid, callback) => {
 
     // Create a stack to hold objects representing a guess - 
     const stack = [];
@@ -20,16 +20,12 @@ export const bruteForce = (grid, callback) => {
     }
     let searchArrays = getSearchArraysFromGrid(grid);
 
-    let startCell = initialUnknowns[0];
     let firstStackItem = {
-        cellIndex: startCell,
+        unknownsIndex: 0,
         usedDigits: [],
         prevCellIndex: null,
     }
     stack.push(firstStackItem);
-
-    // A pointer to the current location within the initialUnknowns array.
-    let pointer = 0;
 
     // Main loop - there are 2 halting conditions
     //
@@ -39,16 +35,31 @@ export const bruteForce = (grid, callback) => {
 
     let counter = 0;
 
-    while (searchArrays[initialUnknowns[0]].length > 0) {
+    while (true) {
         if (counter++ > 100) {
             break;
         }
+        
+        //Temp pause:
+        await delay(1000);
+        
+
+        console.log("start of iteration", counter, "****************");
 
         // Grab the top item on the stack, and get the remaining candidates
+
         const stackItem = stack[stack.length - 1];
-        const cellIndex = stackItem.cellIndex;
+        console.log("current top of stack : cell", initialUnknowns[stackItem.unknownsIndex], stackItem.usedDigits);
+
+        const unknownsIndex = stackItem.unknownsIndex;
+        const cellIndex = initialUnknowns[stackItem.unknownsIndex];
+        searchArrays = getSearchArraysFromGrid(grid);
         const srcArray = [...searchArrays[cellIndex]];
+        console.log("unfiltered SA :", searchArrays[cellIndex], grid);
         const candidates = srcArray.filter(digit => !stackItem.usedDigits.includes(digit));
+        console.log("candidates: ", candidates, "usedDigits", stackItem.usedDigits);
+
+        //await waitingKeypress();
 
         // First halting condition - no candidates remain for first cell - unsolvable puzzle
         if (!stackItem.prevCellIndex && !candidates?.length) {
@@ -57,14 +68,64 @@ export const bruteForce = (grid, callback) => {
         }
 
         // Second halting condition - the last cell has only one candidate remaining - puzzle solved!
-        if (cellIndex === initialUnknowns.length - 1 && candidates.length === 1) {
+        if (unknownsIndex === initialUnknowns.length - 1 && candidates.length === 1) {
             grid = replaceCharAt(grid, cellIndex, candidates[0]);
             callback(grid, searchArrays);
             console.log("Puzzle solved!!!!!");
+            break;
         }
 
         // If there is a candidate for this cell, set it, and create a new stackItem.
-        if (candidates.length)
-    }
+        if (candidates?.length) {
+            const candidate = candidates[0];
+            grid = replaceCharAt(grid, cellIndex, candidate);
+            stackItem.usedDigits.push(candidate);
+            console.log('Candidates: ', candidates, 'Added', candidate, 'to cell', cellIndex);
+            searchArrays = getSearchArraysFromGrid(grid);
+            callback(grid, searchArrays);
 
+            // Check for grid legality - if illegal, remove candidate from grid and add it to usedDigits
+            if (!checkGridLegality(grid, searchArrays)) {
+                console.log('grid is illegal now, removing char in cell', cellIndex);
+                grid = replaceCharAt(grid, cellIndex, "-");
+                searchArrays = getSearchArraysFromGrid(grid);
+                callback(grid, searchArrays);
+                continue;
+            }
+
+            // Grid is still legal. Create a new stack item, and continue
+            const newStackItem = {
+                unknownsIndex: unknownsIndex + 1,
+                usedDigits: [],
+                prevCellIndex: unknownsIndex,
+            }
+            console.log('grid still legal - moving on to cell', initialUnknowns[unknownsIndex + 1]);
+            stack.push(newStackItem);
+            continue;
+        } else {
+            // This cell can't be filled - got to backtrack.
+            stack.pop();
+            console.log('before backtrack:', searchArrays[cellIndex]);
+            grid = replaceCharAt(grid, cellIndex, "-");
+            searchArrays = getSearchArraysFromGrid(grid);
+            console.log('after backtrack:', searchArrays[cellIndex]);
+            callback(grid, searchArrays);
+            console.log('No candidates for cell', cellIndex, 'backing up');
+            continue;
+        }
+    }
 }
+
+function delay(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function waitingKeypress() {
+    return new Promise((resolve) => {
+      document.addEventListener('keydown', onKeyHandler);
+      function onKeyHandler(e) {
+        document.removeEventListener('keydown', onKeyHandler);
+        resolve();
+      }
+    });
+  }

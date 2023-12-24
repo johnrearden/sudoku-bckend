@@ -125,7 +125,7 @@ export const getSquare = (index) => {
 }
 
 export const replaceCharAt = (string, index, char) => {
-    console.log('index :', index, ', char: ', char, ', string :', string);
+    //console.log('index :', index, ', char: ', char, ', string :', string);
     return string.substring(0, index)
         + char.toString()
         + string.substring(index + 1, string.length);

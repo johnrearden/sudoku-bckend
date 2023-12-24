@@ -88,7 +88,6 @@ const PuzzleContainer = () => {
             }
             return [...prev, undoItem];
         });
-
     }
 
     const handleCellSelection = (index) => {
@@ -160,6 +159,8 @@ useEffect(() => {
     }
     if (puzzleData.grid) {
         setExhaustedDigits(getExhaustedDigits(puzzleData.grid));
+        const srcArrs = getSearchArraysFromGrid(puzzleData.grid);
+        setSearchArray(srcArrs);
     }
 }, [puzzleData, currentUser])
 
@@ -189,7 +190,6 @@ useEffect(() => {
 }, [completeness, currentUser, puzzleData, history]) 
 
 const callback = (grid, newSearchArray) => {
-    console.log('callback invoked');
     setPuzzleData(prev => ({
         ...prev,
         grid: grid,
