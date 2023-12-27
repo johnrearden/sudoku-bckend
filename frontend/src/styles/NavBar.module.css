@@ -1,5 +1,5 @@
 .NavBar {
-    background-color: #f0f0f033;
+    background-color: var(--nav-bckgnd);
     border-bottom: 1px solid #dadadf;
     transition: .2s;
 }

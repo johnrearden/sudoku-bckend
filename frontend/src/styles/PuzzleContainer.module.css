@@ -16,6 +16,7 @@ i {
 }
 
 .SuccessMessage {
+    pointer-events: none;
     position: absolute;
     color: var(--fg-color);
     top: 50%;
