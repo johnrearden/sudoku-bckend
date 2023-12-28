@@ -56,7 +56,8 @@ class GetRandomPuzzle(APIView):
 
     def get(self, request, difficulty):
         choices = SudokuPuzzle.objects.filter(difficulty=difficulty)
-        
+        print(request.GET['used_puzzles'])    
+
         if choices:
             owner = None if request.user.is_anonymous else request.user
             puzzle = choice(choices)

@@ -14,9 +14,12 @@ import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import Timer from '../../components/Timer';
 import { createSearchArray, getSearchArraysFromGrid, solvePuzzle } from '../../utils/solver';
 import { bruteForce } from '../../utils/strategies/bruteForce';
+import { usePuzzleHistoryContext } from '../../contexts/PuzzleHistoryContext';
 
 
 const PuzzleContainer = () => {
+
+    const { savePuzzleToHistory, getPuzzleHistory } = usePuzzleHistoryContext();
 
     const { difficulty } = useParams();
     const [puzzleData, setPuzzleData] = useState({
@@ -42,11 +45,40 @@ const PuzzleContainer = () => {
 
     const [undoStack, setUndoStack] = useState([]);
 
-    const [showNotes, setShowNotes] = useState(true);
+    const [showNotes, setShowNotes] = useState(false);
 
     const toggleNotes = () => {
         setShowNotes(!showNotes);
     }
+
+    // Load data on mount.
+    useEffect(() => {
+        const handleMount = async () => {
+            try {
+                const puzzleHistory = getPuzzleHistory("sudoku", difficulty);
+                console.log('puzzleHistory', JSON.stringify(puzzleHistory, null, 2))
+                const getQuery = `?used_puzzles=${puzzleHistory}` || '';
+                const url = `/get_random_puzzle/${difficulty}${getQuery}`;
+                const { data } = await axiosReq.get(url);
+                setPuzzleData(data);
+                const searchArrays = getSearchArraysFromGrid(data.grid);
+                setSearchArray(searchArrays);
+
+            } catch (err) {
+                console.log(err);
+                history.push('/');
+            }
+        }
+
+        const previousPuzzle = window.localStorage.getItem(LCLSTRG_KEY);
+        if (previousPuzzle && false) {
+            const puzzleData = JSON.parse(previousPuzzle);
+            setPuzzleData(puzzleData);
+        } else {
+            handleMount();
+        }
+        
+    }, [difficulty, history, getPuzzleHistory]);
 
     // Tests if a digit is valid in the current selected cell, and displays
     // the warnings if not.
@@ -121,34 +153,6 @@ const PuzzleContainer = () => {
     performValidityCheck(previousValue);
 }
 
-// Load data on mount.
-useEffect(() => {
-    const handleMount = async () => {
-        try {
-            const url = `/get_random_puzzle/${difficulty}/`;
-            const { data } = await axiosReq.get(url);
-            setPuzzleData(data);
-            const searchArrays = getSearchArraysFromGrid(data.grid);
-            setSearchArray(searchArrays);
-
-        } catch (err) {
-            console.log(err.toJSON());
-            history.push('/');
-        }
-    }
-
-    
-
-    const previousPuzzle = window.localStorage.getItem(LCLSTRG_KEY);
-    if (previousPuzzle && false) {
-        const puzzleData = JSON.parse(previousPuzzle);
-        setPuzzleData(puzzleData);
-    } else {
-        handleMount();
-    }
-    
-}, [difficulty, history])
-
 
 // Update completeness each time the grid changes
 useEffect(() => {
@@ -185,6 +189,7 @@ useEffect(() => {
     }
     if (completeness >= 100) {
         window.localStorage.removeItem(LCLSTRG_KEY);
+        savePuzzleToHistory(puzzleData.id, "sudoku", difficulty);
         submitCompletedPuzzle();
     }
 }, [completeness, currentUser, puzzleData, history]) 

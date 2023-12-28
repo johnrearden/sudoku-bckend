@@ -364,7 +364,7 @@ export const getSearchArraysFromGrid = (grid) => {
 export const checkGridLegality = (grid, searchArrays) => {
     for (let i = 0; i < grid.length; i++) {
         if (grid.charAt(i) === '-' && searchArrays[i].length === 0) {
-            console.log('searchArray for empty cell', i, 'is empty');
+            console.log('searchArray for empty  cell', i, 'is empty');
             return false;
         }
     }

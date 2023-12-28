@@ -6,15 +6,17 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom/cjs/react-router-dom.min';
 import { CurrentUserProvider } from './contexts/CurrentUserContext';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { PuzzleHistoryProvider } from './contexts/PuzzleHistoryContext';
 
 ReactDOM.render(
     <Router>
         <ThemeProvider>
             <CurrentUserProvider>
-                <App />
+                <PuzzleHistoryProvider>
+                    <App />
+                </PuzzleHistoryProvider>
             </CurrentUserProvider>
         </ThemeProvider>
-
     </Router>
     ,
     document.getElementById('root')
