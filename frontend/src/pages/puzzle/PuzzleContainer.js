@@ -5,7 +5,7 @@ import { Button, Col, Container, Row } from 'react-bootstrap';
 import DigitChooser from '../../components/DigitChooser';
 import Puzzle from '../../components/Puzzle';
 import { CompletenessDisplay } from '../../components/CompletenessDisplay';
-import { checkCellValidity, getExhaustedDigits, replaceCharAt } from '../../utils/utils';
+import { checkCellValidity, getCookie, getExhaustedDigits, replaceCharAt } from '../../utils/utils';
 import { DIFFICULTY_LEVELS } from '../../constants/constants';
 import btnStyles from '../../styles/Button.module.css'
 import styles from '../../styles/PuzzleContainer.module.css'
@@ -57,7 +57,10 @@ const PuzzleContainer = () => {
             try {
                 const puzzleHistory = getPuzzleHistory("sudoku", difficulty);
                 console.log('puzzleHistory', JSON.stringify(puzzleHistory, null, 2))
-                const getQuery = `?used_puzzles=${puzzleHistory}` || '';
+                let getQuery = '';
+                if (puzzleHistory) {
+                    getQuery = `?used_puzzles=${puzzleHistory}`;
+                }
                 const url = `/get_random_puzzle/${difficulty}${getQuery}`;
                 const { data } = await axiosReq.get(url);
                 setPuzzleData(data);
@@ -181,7 +184,10 @@ useEffect(() => {
         formData.append("completed", "true");
         
         try {
-            const {data} = await axiosReq.post('/create_puzzle_instance/', formData);
+            const {data} = await axiosReq.post(
+                '/create_puzzle_instance/', 
+                formData,
+                );
             window.setTimeout(() => history.push(`/leaderboard/${data.id}`), 2000);
         } catch (err) {
             console.log(err);

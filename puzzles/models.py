@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from player_profile.models import PlayerProfile
+
 
 class SudokuPuzzle(models.Model):
     DIFFICULTIES = (
@@ -29,7 +31,7 @@ class PuzzleInstance(models.Model):
     puzzle = models.ForeignKey(
         SudokuPuzzle, on_delete=models.CASCADE, related_name="instances")
     owner = models.ForeignKey(
-        User,
+        PlayerProfile,
         on_delete=models.CASCADE,
         related_name="puzzle_instances")
     grid = models.CharField(max_length=81)
@@ -44,7 +46,7 @@ class PuzzleInstance(models.Model):
         ]
 
     def __str__(self):
-        return f'{self.owner.username}\'s puzzle ({self.id})'
+        return f'{self.owner.nickname}\'s puzzle ({self.id})'
 
     def save(self, *args, **kwargs):
         timedelta = self.completed_at - self.started_on

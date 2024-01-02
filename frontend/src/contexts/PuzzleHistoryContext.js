@@ -17,13 +17,15 @@ export const PuzzleHistoryProvider = ({ children }) => {
             const currentValue = localStorage.getItem(key);
             let list;
             if (currentValue) {
+                // Parse the list in string form and remove the id to be
+                // saved from it - it should only appear once, at the end of the list.
                 list = JSON.parse(currentValue);
+                list = list.filter(itemId => itemId !== id);
             } else {
                 list = [];
             }
-            if (!list.includes(difficulty)) {
-                list.push(id);
-            }
+            list.push(id);
+
             list = list.slice(-MAX_PUZZLE_HISTORY_COUNT);
             const newValue = JSON.stringify(list);
             localStorage.setItem(key, newValue);

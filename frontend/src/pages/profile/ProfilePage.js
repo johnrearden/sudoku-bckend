@@ -10,25 +10,20 @@ import btnStyles from '../../styles/Button.module.css'
 const ProfilePage = () => {
 
     const [profileData, setProfileData] = useState({
-        avatar: '',
         nickname: '',
         created_on: '',
         owner: '',
     })
-    const { avatar, nickname, created_on, owner, country } = profileData;
+    const { nickname, created_on, country } = profileData;
     const { id } = useParams();
     const [errors, setErrors] = useState({});
-    const [editing, setEditing] = useState(false);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         const formData = new FormData();
         formData.append("nickname", nickname);
-        formData.append("owner", owner);
         formData.append("country", country);
-        if (imageFile?.current?.files[0]) {
-            formData.append("avatar", imageFile?.current?.files[0])
-        }
+        
         try {
             const url = 'profile/' + id + '/';
             try {
@@ -52,8 +47,6 @@ const ProfilePage = () => {
         }));
     }
 
-    const imageFile = useRef();
-
     useEffect(() => {
         const handleMount = async () => {
             try {
@@ -75,12 +68,12 @@ const ProfilePage = () => {
 
     return (
         <>
-            <Row className="mt-5">
-                <Col md={{ span: 4, offset: 2 }} className="text-center">
-                    <Avatar
-                        src={avatar}
-                        height={300} />
+            <Row>
+                <Col md={6}>
+                    
                 </Col>
+            </Row>
+            <Row className="mt-5">
                 <Col md={4} className="text-center my-auto">
                     <ReactCountryFlag
                         className="emojiFlag"
@@ -91,7 +84,7 @@ const ProfilePage = () => {
                             lineHeight: '2em',
                         }}
                         aria-label="United States"
-                    ></ReactCountryFlag>
+                    />
                     <h3 className="mt-2">{profileData.nickname}</h3>
                     <span>Joined {dateString}</span><br></br>
                     {!editing && (

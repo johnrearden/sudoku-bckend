@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from random import choice
 from .models import SudokuPuzzle, PuzzleInstance
 from .serializers import SudokuPuzzleSerializer, PuzzleInstanceSerializer
-from sudoku_bckend.permissions import IsOwnerOrReadOnly
+from sudoku_bckend.permissions import IsOwnerOrReadOnly, HasPlayerProfileCookie
 
 from datetime import datetime
 
@@ -34,21 +34,9 @@ class SudokuPuzzlesList(generics.ListCreateAPIView):
         serializer.save(created_by=self.request.user)
 
 
-class SudokuPuzzleDetail(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = SudokuPuzzleSerializer
-    permission_classes = [permissions.IsAdminUser]
-    queryset = SudokuPuzzle.objects.all()
-
-
-class GetPuzzleInstance(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = PuzzleInstanceSerializer
-    permission_classes = [IsOwnerOrReadOnly]
-    queryset = PuzzleInstance.objects.all()
-
-
 class CreatePuzzleInstance(generics.CreateAPIView):
     serializer_class = PuzzleInstanceSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [HasPlayerProfileCookie]
 
 
 class GetRandomPuzzle(APIView):
@@ -56,14 +44,22 @@ class GetRandomPuzzle(APIView):
 
     def get(self, request, difficulty):
         choices = SudokuPuzzle.objects.filter(difficulty=difficulty)
-        print(request.GET['used_puzzles'])    
-
         if choices:
-            owner = None if request.user.is_anonymous else request.user
-            puzzle = choice(choices)
+            query = request.GET['used_puzzles'] if request.GET else None
+            seen_puzzles = query.split(',') if query else []
+            filtered_choices = choices.exclude(id__in=seen_puzzles)
+
+            # Choose a puzzle at random if any unseen puzzles remain, otherwise
+            # return the first puzzle in the seen_puzzles list, the least
+            # recently seen puzzle.
+            if filtered_choices:
+                puzzle = choice(filtered_choices)
+            elif seen_puzzles:
+                puzzle = SudokuPuzzle.objects.get(id=seen_puzzles[0])
+            
             serializer = SudokuPuzzleSerializer(
-                puzzle,
-                context={'request': request})
+                    puzzle,
+                    context={'request': request})
             puzzle.instances_created += 1
             puzzle.save()
             return Response(serializer.data)
