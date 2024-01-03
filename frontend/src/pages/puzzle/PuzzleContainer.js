@@ -5,7 +5,7 @@ import { Button, Col, Container, Row } from 'react-bootstrap';
 import DigitChooser from '../../components/DigitChooser';
 import Puzzle from '../../components/Puzzle';
 import { CompletenessDisplay } from '../../components/CompletenessDisplay';
-import { checkCellValidity, getCookie, getExhaustedDigits, replaceCharAt } from '../../utils/utils';
+import { checkCellValidity, getExhaustedDigits, replaceCharAt } from '../../utils/utils';
 import { DIFFICULTY_LEVELS } from '../../constants/constants';
 import btnStyles from '../../styles/Button.module.css'
 import styles from '../../styles/PuzzleContainer.module.css'
@@ -15,6 +15,7 @@ import Timer from '../../components/Timer';
 import { createSearchArray, getSearchArraysFromGrid, solvePuzzle } from '../../utils/solver';
 import { bruteForce } from '../../utils/strategies/bruteForce';
 import { usePuzzleHistoryContext } from '../../contexts/PuzzleHistoryContext';
+import ProfileForm from '../../components/ProfileForm';
 
 
 const PuzzleContainer = () => {
@@ -56,7 +57,6 @@ const PuzzleContainer = () => {
         const handleMount = async () => {
             try {
                 const puzzleHistory = getPuzzleHistory("sudoku", difficulty);
-                console.log('puzzleHistory', JSON.stringify(puzzleHistory, null, 2))
                 let getQuery = '';
                 if (puzzleHistory) {
                     getQuery = `?used_puzzles=${puzzleHistory}`;
@@ -176,12 +176,24 @@ useEffect(() => {
 useEffect(() => {
     const submitCompletedPuzzle = async() => {
         const formData = new FormData();
-        formData.append("owner", currentUser?.pk);
         formData.append("puzzle", puzzleData.id);
         formData.append("grid", puzzleData.grid);
         formData.append("started_on", puzzleData.start_time);
         formData.append("completed_at", new Date().toISOString());
         formData.append("completed", "true");
+
+        const profileFormData = new FormData();
+        profileFormData.append('nickname', 'mikey3');
+        profileFormData.append('country', 'IE');
+
+        try {
+            await axiosReq.post(
+                '/create_player_profile/',
+                profileFormData
+            );
+        } catch (err) {
+            console.log(err);
+        }
         
         try {
             const {data} = await axiosReq.post(
@@ -198,7 +210,7 @@ useEffect(() => {
         savePuzzleToHistory(puzzleData.id, "sudoku", difficulty);
         submitCompletedPuzzle();
     }
-}, [completeness, currentUser, puzzleData, history]) 
+}, [completeness, currentUser, puzzleData, history, difficulty, savePuzzleToHistory]) 
 
 const callback = (grid, newSearchArray) => {
     setPuzzleData(prev => ({
@@ -278,6 +290,8 @@ return (
                     Notes
             </Button>
         </Row>
+
+        <ProfileForm />
 
     </Container>
 )

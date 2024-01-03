@@ -33,7 +33,8 @@ class PuzzleInstance(models.Model):
     owner = models.ForeignKey(
         PlayerProfile,
         on_delete=models.CASCADE,
-        related_name="puzzle_instances")
+        related_name="puzzle_instances",
+        blank=True)
     grid = models.CharField(max_length=81)
     started_on = models.DateTimeField()
     completed = models.BooleanField(default=False)

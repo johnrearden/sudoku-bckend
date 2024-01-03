@@ -34,6 +34,7 @@ const NavBar = () => {
         }
     }
 
+    // eslint-disable-next-line
     const loggedOutIcons = (
         <>
             <NavLink
@@ -52,6 +53,7 @@ const NavBar = () => {
         </>
     );
 
+    // eslint-disable-next-line
     const loggedInIcons = (
         <>
             <NavLink

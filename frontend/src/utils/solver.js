@@ -266,6 +266,7 @@ export const colsInSquares = (grid, searchArray, callback) => {
 
 }
 
+// eslint-disable-next-line
 const obviousPairs = (grid, searchArray, callback) => {
     let nonet;
     for (let n = 0; n < 27; n++) {

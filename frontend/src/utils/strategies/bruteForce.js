@@ -1,5 +1,4 @@
 import {
-    checkGridLegality,
     getSearchArraysFromGrid
 } from "../solver";
 import {
@@ -95,6 +94,7 @@ export const bruteForce = async (grid, callback) => {
     }
 }
 
+// eslint-disable-next-line
 function delay(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }

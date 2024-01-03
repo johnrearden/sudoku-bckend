@@ -1,6 +1,9 @@
 from rest_framework import serializers
 from .models import SudokuPuzzle, PuzzleInstance
+from player_profile.models import PlayerProfile
 from datetime import datetime
+
+
 
 
 class SudokuPuzzleSerializer(serializers.ModelSerializer):
@@ -27,19 +30,9 @@ class PuzzleInstanceSerializer(serializers.ModelSerializer):
     original = serializers.ReadOnlyField(source='puzzle.grid')
     difficulty = serializers.ReadOnlyField(source='puzzle.get_difficulty_display')
     owner_nickname = serializers.ReadOnlyField(source='owner.nickname')
-    
-    duration = serializers.SerializerMethodField()
-    country = serializers.SerializerMethodField()
-
-    def get_country(self, obj):
-        return obj.owner.country
-
-    def get_duration(self, obj):
-        print(f'Time taken : {int(obj.time_taken.total_seconds() * 1000)}')
-        return int(obj.time_taken.total_seconds() * 1000)
 
     class Meta:
         model = PuzzleInstance
         fields = ['id', 'puzzle', 'owner', 'owner_nickname', 'grid', 'original', 
                   'started_on', 'completed', 'difficulty', 'completed_at',
-                  'time_taken', 'country', 'duration']
+                  'time_taken',]

@@ -45,7 +45,6 @@ export const PuzzleHistoryProvider = ({ children }) => {
         try {
             const list = localStorage.getItem(key);
             const parsedList = JSON.parse(list);
-            console.log('list from localStorage :', list);
             return parsedList || null;
         } catch (err) {
             console.log(err);

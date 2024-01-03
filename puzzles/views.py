@@ -1,10 +1,12 @@
 from django.http import Http404, JsonResponse
+from django.conf import settings
 from rest_framework import status, generics, permissions, filters
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from random import choice
 from .models import SudokuPuzzle, PuzzleInstance
+from player_profile.models import PlayerProfile
 from .serializers import SudokuPuzzleSerializer, PuzzleInstanceSerializer
 from sudoku_bckend.permissions import IsOwnerOrReadOnly, HasPlayerProfileCookie
 
@@ -37,6 +39,14 @@ class SudokuPuzzlesList(generics.ListCreateAPIView):
 class CreatePuzzleInstance(generics.CreateAPIView):
     serializer_class = PuzzleInstanceSerializer
     permission_classes = [HasPlayerProfileCookie]
+    authentication_classes = []
+
+    def perform_create(self, serializer):
+        request = self.request
+        profile_cookie = request.COOKIES.get(settings.PLAYER_PROFILE_COOKIE, '')
+        print(f'profile_cookie : {profile_cookie}')
+        profile = PlayerProfile.objects.filter(uuid=profile_cookie).first()
+        serializer.save(owner=profile)
 
 
 class GetRandomPuzzle(APIView):
