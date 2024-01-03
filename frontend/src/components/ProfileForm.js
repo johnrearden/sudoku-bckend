@@ -35,69 +35,69 @@ const ProfileForm = () => {
     }
 
     return ( 
-        <Form onSubmit={handleSubmit} className="mt-3">
-            <Row className="d-flex justify-content-center">
-                <Col md={6}>
-                    <Form.Group controlId="nickname">
-                        <Form.Control 
-                            className={styles.Input}
-                            type="text"
-                            placeholder="Nickname"
-                            onChange={(e) => {
-                                setProfileData({
-                                    ...profileData,
-                                    nickname: e.target.value
-                                })
+        <div className={styles.Background}>
+            <Form onSubmit={handleSubmit} className="mt-3">
+                <Row className="d-flex justify-content-center">
+                    <Col md={6}>
+                        <Form.Group controlId="nickname">
+                            <Form.Control 
+                                className={styles.Input}
+                                type="text"
+                                placeholder="Nickname"
+                                onChange={(e) => {
+                                    setProfileData({
+                                        ...profileData,
+                                        nickname: e.target.value
+                                    })
+                                }}
+                            />
+                        </Form.Group>
+                        {errors?.nickname?.map((message, idx) => (
+                            <Alert variant="warning" key={idx}>
+                                {message}
+                            </Alert>
+                        ))}
+                    </Col>
+                </Row>
+                <Row className="d-flex justify-content-center align-items-center">
+                    <Col md={4}>
+                        <Form.Group 
+                            controlId="exampleForm.SelectCustom"
+                            >
+                            <Form.Control as="select"
+                                onChange={handleCountryChange}
+                                className={`${styles.Input}`}
+                            >
+                                {Object.keys(COUNTRY_CODES).map(key => (
+                                    <option 
+                                        key={key}
+                                        value={key}
+                                        onChange={handleCountryChange}
+                                    >{COUNTRY_CODES[key]}</option>
+                                ))}
+                            </Form.Control>
+                        </Form.Group>
+                        {errors?.country?.map((message, idx) => (
+                            <Alert variant="warning" key={idx}>
+                                {message}
+                            </Alert>
+                        ))}
+                    </Col>
+                    <Col md={2}>
+                        <ReactCountryFlag
+                            className="emojiFlag"
+                            countryCode={country}
+                            svg
+                            style={{
+                                fontSize: '4em',
+                                lineHeight: '4em',
                             }}
-                        />
-                    </Form.Group>
-                    {errors?.nickname?.map((message, idx) => (
-                        <Alert variant="warning" key={idx}>
-                            {message}
-                        </Alert>
-                    ))}
-                </Col>
-            </Row>
-            <Row className="d-flex justify-content-center">
-                <Col md={4}>
-                    <Form.Group 
-                        controlId="exampleForm.SelectCustom"
-                        className="my-auto">
-                        <Form.Control as="select"
-                            onChange={handleCountryChange}
-                            className={styles.Input}
-                        >
-                            {Object.keys(COUNTRY_CODES).map(key => (
-                                <option 
-                                    key={key}
-                                    value={key}
-                                    onChange={handleCountryChange}
-                                >{COUNTRY_CODES[key]}</option>
-                            ))}
-                        </Form.Control>
-                    </Form.Group>
-                    {errors?.country?.map((message, idx) => (
-                        <Alert variant="warning" key={idx}>
-                            {message}
-                        </Alert>
-                    ))}
-                </Col>
-                <Col md={2}>
-                    <ReactCountryFlag
-                        className="emojiFlag mt-0"
-                        countryCode={country}
-                        svg
-                        style={{
-                            fontSize: '3em',
-                            lineHeight: '3em',
-                        }}
-                        aria-label="United States"
-                    />  
-                </Col>
-            </Row>
-            
-            
-        </Form>
+                            aria-label="United States"
+                        />  
+                    </Col>
+                </Row>
+            </Form>
+        </div>
     )
 }
 

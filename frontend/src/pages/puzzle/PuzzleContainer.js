@@ -200,7 +200,7 @@ useEffect(() => {
                 '/create_puzzle_instance/', 
                 formData,
                 );
-            window.setTimeout(() => history.push(`/leaderboard/${data.id}`), 2000);
+            // window.setTimeout(() => history.push(`/leaderboard/${data.id}`), 2000);
         } catch (err) {
             console.log(err);
         }
@@ -260,6 +260,8 @@ return (
                 completed={completeness === 100} />
             <div className={successStyle}>
                 <h1>Well Done!</h1>
+                <Button>Leaderboard</Button>
+                
             </div>
         </Row>
         <Row className="d-flex justify-content-center mt-3">
