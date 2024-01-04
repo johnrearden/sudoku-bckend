@@ -8,7 +8,6 @@ import SignInForm from './pages/auth/SignInForm';
 import NotFound from './components/NotFound';
 import Home from './pages/puzzle/Home';
 import PuzzleContainer from './pages/puzzle/PuzzleContainer';
-import ProfilePage from './pages/profile/ProfilePage';
 import { useTheme } from './contexts/ThemeContext';
 
 import themes from './styles/Themes.module.css';
@@ -38,7 +37,6 @@ function App() {
                             <Home />
                         )} />
                     <Route exact path="/leaderboard/:id" render={() => <Leaderboard />}/>
-                    <Route exact path="/profile/:id" render={() => <ProfilePage />}/>
                     <Route exact path="/signin" render={() => <SignInForm />} />
                     <Route exact path="/signup" render={() => <SignUpForm />} />
                     <Route render={() => <NotFound />} />

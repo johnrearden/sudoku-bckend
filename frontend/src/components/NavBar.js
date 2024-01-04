@@ -46,13 +46,14 @@ const NavBar = () => {
                 activeClassName={styles.Active}
                 to="/signin">
                 <i className="fa-solid fa-arrow-right-to-bracket"></i>
-                <span>Login</span>
+                {/* <span>Login</span> */}
             </NavLink>
             <NavLink
                 className={styles.NavLink}
                 activeClassName={styles.Active}
                 to="/signup">
-                <i className="fa-regular fa-user"></i><span>Sign Up</span>
+                <i className="fa-regular fa-user"></i>
+                {/* <span>Sign Up</span> */}
             </NavLink>
         </>
     );
@@ -62,19 +63,12 @@ const NavBar = () => {
         <>
             <NavLink
                 className={styles.NavLink}
-                activeClassName={styles.Active}
-                to={`/profile/${currentUser?.profile_id}`}>
-                <i className="fa-solid fa-user"></i>
-                <span>Profile</span>
-            </NavLink>
-            <NavLink
-                className={styles.NavLink}
                 to="/"
                 onClick={() => {
                     handleSignout();
                 }}>
                 <i className="fa-solid fa-person-walking-arrow-right"></i>
-                <span>Logout</span>
+                {/* <span>Logout</span> */}
             </NavLink>
         </>)
 
@@ -92,19 +86,12 @@ const NavBar = () => {
                     onClick={() => setExpanded(!expanded)} />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto text-left">
-                        <NavLink exact
-                            className={styles.NavLink}
-                            activeClassName={styles.Active}
-                            to="/">
-                            <div className='d-flex align-items-center'>
-                                <i className="fa-solid fa-house"></i>
-                            </div>
-                        </NavLink>
+                        
                         
                         {/* Button to toggle light/dark theme */}
                         <button
                             aria-label="theme-toggle-button"
-                            className={`${btnStyles.Button}`}
+                            className={`${btnStyles.Button} mr-3`}
                             onClick={handleThemeToggle}
                         >
                             {theme === 'light' ? (
@@ -114,9 +101,16 @@ const NavBar = () => {
                             )}
                         </button>
 
-                        {currentUser ? loggedInIcons : loggedOutIcons}
+                        <NavLink exact
+                            className={styles.NavLink}
+                            activeClassName={styles.Active}
+                            to="/">
+                            <div className='d-flex align-items-center'>
+                                <i className="fa-solid fa-house"></i>
+                            </div>
+                        </NavLink>
 
-                        
+                        {currentUser ? loggedInIcons : loggedOutIcons}
 
                         { profile && (
                             <div className="mx-3">
@@ -132,7 +126,6 @@ const NavBar = () => {
                                     aria-label={profile.country}
                                 ></ReactCountryFlag>
                             </div>
-                            
                         )}
 
                     </Nav>

@@ -26,6 +26,7 @@ class CreatePlayerProfile(APIView):
 
 class RetrievePlayerProfile(APIView):
     permission_classes = [HasPlayerProfileCookie]
+    authentication_classes = []
 
     def get(self, request):
         profile_cookie = request.COOKIES.get(settings.PLAYER_PROFILE_COOKIE, '')

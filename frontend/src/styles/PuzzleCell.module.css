@@ -1,7 +1,3 @@
-/* :root {
-    --size: clamp(25px, calc(100vw / 12), 40px);
-} */
-
 .Cell {
     width: var(--size);
     height: var(--size);

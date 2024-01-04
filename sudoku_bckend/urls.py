@@ -26,7 +26,6 @@ urlpatterns = [
     path('api/dj-rest-auth/', include('dj_rest_auth.urls')),
     path('api/dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     path('api/', include('puzzles.urls')),
-    path('api/', include('profiles.urls')),
     path('api/', include('player_profile.urls')),
 ]
 

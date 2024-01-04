@@ -32,8 +32,13 @@ class PuzzleInstanceSerializer(serializers.ModelSerializer):
     owner_nickname = serializers.ReadOnlyField(source='owner.nickname')
     owner_country = serializers.ReadOnlyField(source="owner.country")
 
+    duration = serializers.SerializerMethodField()
+    def get_duration(self, obj):
+        print(f'Time taken : {int(obj.time_taken.total_seconds() * 1000)}')
+        return int(obj.time_taken.total_seconds() * 1000)
+
     class Meta:
         model = PuzzleInstance
         fields = ['id', 'puzzle', 'owner', 'owner_nickname', 'owner_country', 
                   'grid', 'original', 'started_on', 'completed', 'difficulty',
-                  'completed_at', 'time_taken',]
+                  'completed_at', 'time_taken', 'duration']
