@@ -5,8 +5,11 @@ import { COUNTRY_CODES, NICKNAME_AVAILABLE_THROTTLE_TIMEOUT } from '../constants
 import ReactCountryFlag from 'react-country-flag';
 import styles from '../styles/ProfileForm.module.css';
 import btnStyles from "../styles/Button.module.css";
+import { useSetProfile } from '../contexts/ProfileContext';
 
 const ProfileForm = ({ callback }) => {
+
+    const setProfile = useSetProfile();
 
     const [profileData, setProfileData] = useState({ nickname: '', country: 'AF'});
     const { nickname, country } = profileData;
@@ -23,7 +26,8 @@ const ProfileForm = ({ callback }) => {
         formData.append("country", country);
 
         try {
-            await axiosReq.post("create_player_profile/", formData);
+            const { data } = await axiosReq.post("create_player_profile/", formData);
+            setProfile(data);
             callback();
         } catch (err) {
             console.log(err);

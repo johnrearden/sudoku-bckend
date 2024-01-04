@@ -5,7 +5,7 @@
     padding: 4px 10px;
     margin-left: 2px;
     margin-right: 2px;
-    min-width: 50px;
+    min-width: 100px;
     background-color: var(--brgt-color) !important;
     color: var(--fg-color) !important;
     border: 2px solid var(--fg-color);

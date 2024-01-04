@@ -1,4 +1,6 @@
-
+:root {
+    --size: clamp(25px, calc(100vw / 12), 50px);
+}
 
 .App {
     font-family: "DM Sans", sans-serif;

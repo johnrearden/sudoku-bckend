@@ -1,29 +1,38 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom'
-import { axiosReq } from '../../api/axiosDefaults';
+
 import { Button, Col, Container, Modal, Row } from 'react-bootstrap';
-import DigitChooser from '../../components/DigitChooser';
-import Puzzle from '../../components/Puzzle';
-import { CompletenessDisplay } from '../../components/CompletenessDisplay';
-import { checkCellValidity, getExhaustedDigits, replaceCharAt } from '../../utils/utils';
-import { DIFFICULTY_LEVELS } from '../../constants/constants';
+
 import btnStyles from '../../styles/Button.module.css'
 import styles from '../../styles/PuzzleContainer.module.css'
 import themes from '../../styles/Themes.module.css';
-import { LCLSTRG_KEY } from '../../constants/constants';
-import { useCurrentUser } from '../../contexts/CurrentUserContext';
+
+import DigitChooser from '../../components/DigitChooser';
 import Timer from '../../components/Timer';
+import Puzzle from '../../components/Puzzle';
+import ProfileForm from '../../components/ProfileForm';
+import { CompletenessDisplay } from '../../components/CompletenessDisplay';
+
+import { axiosReq } from '../../api/axiosDefaults';
+import { checkCellValidity, getExhaustedDigits, replaceCharAt } from '../../utils/utils';
+import { DIFFICULTY_LEVELS, LCLSTRG_KEY } from '../../constants/constants';
+
+import { useCurrentUser } from '../../contexts/CurrentUserContext';
+import { usePuzzleHistoryContext } from '../../contexts/PuzzleHistoryContext';
+import { useTheme } from '../../contexts/ThemeContext';
+import { useProfile } from '../../contexts/ProfileContext';
+
 import { createSearchArray, getSearchArraysFromGrid, solvePuzzle } from '../../utils/solver';
 import { bruteForce } from '../../utils/strategies/bruteForce';
-import { usePuzzleHistoryContext } from '../../contexts/PuzzleHistoryContext';
-import ProfileForm from '../../components/ProfileForm';
-import { useTheme } from '../../contexts/ThemeContext';
 
 
 const PuzzleContainer = () => {
 
+    // Have to load theme here as react-bootstrap modal doesn't inherit them. WTF.
     const theme = useTheme();
     const themeStyles = theme === 'light' ? themes.lightTheme : themes.darkTheme;
+
+    const profile = useProfile();
 
     const { savePuzzleToHistory, getPuzzleHistory } = usePuzzleHistoryContext();
 
@@ -164,12 +173,15 @@ const PuzzleContainer = () => {
 
     const handleLeaderboardButtonClick = () => {
         console.log('handleLeaderboardButtonClick');
-        if (true) {
+        if (!profile) {
             setShowProfileModal(true);
+        } else {
+            submitPuzzle();
         }
     }
 
     const profileModalCallback = () => {
+        console.log('profileModalCallback invoked');
         setShowProfileModal(false);
         submitPuzzle();
     }
@@ -286,19 +298,23 @@ const PuzzleContainer = () => {
                 </Button>
                 <Button
                     className={`${btnStyles.Button} mx-2`}
-                    onClick={handleSolve}>
-                    Solve
-                </Button>
-                <Button
-                    className={`${btnStyles.Button} mx-2`}
-                    onClick={handleBruteForce}>
-                    Brute Force
-                </Button>
-                <Button
-                    className={`${btnStyles.Button} mx-2`}
                     onClick={toggleNotes}>
                         Notes
                 </Button>
+                { currentUser && (
+                    <>
+                        <Button
+                            className={`${btnStyles.Button} mx-2`}
+                            onClick={handleSolve}>
+                            Solve
+                        </Button>
+                        <Button
+                            className={`${btnStyles.Button} mx-2`}
+                            onClick={handleBruteForce}>
+                            Brute Force
+                        </Button>
+                </>
+                )}
             </Row>
 
             <Modal 

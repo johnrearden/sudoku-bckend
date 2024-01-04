@@ -7,11 +7,15 @@ import { useCurrentUser, useSetCurrentUser } from '../contexts/CurrentUserContex
 import axios from 'axios';
 import useClickOutsideToggle from '../hooks/useClickOutsideToggle';
 import { useSetTheme, useTheme } from '../contexts/ThemeContext';
+import { useProfile } from '../contexts/ProfileContext';
+import ReactCountryFlag from 'react-country-flag';
 
 
 const NavBar = () => {
     const currentUser = useCurrentUser();
     const setCurrentUser = useSetCurrentUser();
+
+    const profile = useProfile();
 
     const theme = useTheme();
     const setTheme = useSetTheme();
@@ -88,6 +92,14 @@ const NavBar = () => {
                     onClick={() => setExpanded(!expanded)} />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto text-left">
+                        <NavLink exact
+                            className={styles.NavLink}
+                            activeClassName={styles.Active}
+                            to="/">
+                            <div className='d-flex align-items-center'>
+                                <i className="fa-solid fa-house"></i>
+                            </div>
+                        </NavLink>
                         
                         {/* Button to toggle light/dark theme */}
                         <button
@@ -104,16 +116,24 @@ const NavBar = () => {
 
                         {currentUser ? loggedInIcons : loggedOutIcons}
 
-                        <NavLink exact
-                            className={styles.NavLink}
-                            activeClassName={styles.Active}
-                            to="/">
-                            <div className='d-flex align-items-center'>
-                                <i className="fa-solid fa-house"></i>
-                                <span>Home</span>
-                            </div>
+                        
 
-                        </NavLink>
+                        { profile && (
+                            <div className="mx-3">
+                                <span className="mx-2 my-auto">{profile.nickname}</span>
+                                <ReactCountryFlag
+                                    className="emojiFlag"
+                                    countryCode={profile.country}
+                                    svg
+                                    style={{
+                                        fontSize: '2em',
+                                        lineHeight: '2em',
+                                    }}
+                                    aria-label={profile.country}
+                                ></ReactCountryFlag>
+                            </div>
+                            
+                        )}
 
                     </Nav>
                 </Navbar.Collapse>

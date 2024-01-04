@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.conf import settings
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics, status
 from rest_framework.renderers import BrowsableAPIRenderer, HTMLFormRenderer
 
+from sudoku_bckend.permissions import HasPlayerProfileCookie
 from .serializers import PlayerProfileSerializer
 from .models import PlayerProfile
 
@@ -19,7 +20,20 @@ class CreatePlayerProfile(APIView):
             instance = serializer.save()
             response = Response(status=status.HTTP_201_CREATED)
             response.set_cookie(settings.PLAYER_PROFILE_COOKIE, instance.uuid)
+            response.data = serializer.data
             return response
+
+
+class RetrievePlayerProfile(APIView):
+    permission_classes = [HasPlayerProfileCookie]
+
+    def get(self, request):
+        profile_cookie = request.COOKIES.get(settings.PLAYER_PROFILE_COOKIE, '')
+        profile = get_object_or_404(PlayerProfile, uuid=profile_cookie)
+        #profile = PlayerProfile.objects.filter(uuid=profile_cookie).first()
+        serializer = PlayerProfileSerializer(profile)
+        return Response(serializer.data)
+
 
 
 class IsNicknameAvailable(APIView):

@@ -33,12 +33,12 @@ const Leaderboard = () => {
             key={index}
             className={data.ranking === index ? styles.UserRanking : styles.RankingRow}>
             <td>{index + 1}</td>
-            <td>{instance.owner_name}</td>
+            <td>{instance.owner_nickname}</td>
             <td>{millisToTimeString(instance.duration)}</td>
             <td>
                 <ReactCountryFlag
                     className="emojiFlag"
-                    countryCode={instance.country}
+                    countryCode={instance.owner_country}
                     svg
                     style={{
                         fontSize: '1.5em',
@@ -69,12 +69,12 @@ const Leaderboard = () => {
                 key={tableRows.length + 2}
                 className={styles.UserRanking}>
                 <td>{data.ranking}</td>
-                <td>{data.puzzle_instance.owner_name}</td>
+                <td>{data.puzzle_instance.owner_nickname}</td>
                 <td>{millisToTimeString(data.puzzle_instance.duration)}</td>
                 <td>
                     <ReactCountryFlag
                         className="emojiFlag"
-                        countryCode={data.puzzle_instance.country}
+                        countryCode={data.puzzle_instance.owner_country}
                         svg
                         style={{
                             fontSize: '1.5em',
@@ -106,6 +106,7 @@ const Leaderboard = () => {
                                 <td>Rank</td>
                                 <td>Player</td>
                                 <td>Time</td>
+                                <td>Country</td>
                             </tr>
                         </thead>
                         <tbody>

@@ -7,14 +7,17 @@ import { BrowserRouter as Router } from 'react-router-dom/cjs/react-router-dom.m
 import { CurrentUserProvider } from './contexts/CurrentUserContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { PuzzleHistoryProvider } from './contexts/PuzzleHistoryContext';
+import { ProfileProvider } from './contexts/ProfileContext';
 
 ReactDOM.render(
     <Router>
         <ThemeProvider>
             <CurrentUserProvider>
-                <PuzzleHistoryProvider>
-                    <App />
-                </PuzzleHistoryProvider>
+                <ProfileProvider>
+                    <PuzzleHistoryProvider>
+                        <App />
+                    </PuzzleHistoryProvider>
+                </ProfileProvider>
             </CurrentUserProvider>
         </ThemeProvider>
     </Router>
