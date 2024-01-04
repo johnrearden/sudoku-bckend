@@ -7,6 +7,8 @@ export const DIFFICULTY_LEVELS = [
 
 export const LCLSTRG_KEY = "puzzleData";
 
+export const NICKNAME_AVAILABLE_THROTTLE_TIMEOUT = 200;
+
 export const COUNTRY_CODES = {
     AF: "Afghanistan",
     AL: "Albania",

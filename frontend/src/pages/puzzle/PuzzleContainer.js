@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom'
 import { axiosReq } from '../../api/axiosDefaults';
-import { Button, Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Modal, Row } from 'react-bootstrap';
 import DigitChooser from '../../components/DigitChooser';
 import Puzzle from '../../components/Puzzle';
 import { CompletenessDisplay } from '../../components/CompletenessDisplay';
@@ -9,6 +9,7 @@ import { checkCellValidity, getExhaustedDigits, replaceCharAt } from '../../util
 import { DIFFICULTY_LEVELS } from '../../constants/constants';
 import btnStyles from '../../styles/Button.module.css'
 import styles from '../../styles/PuzzleContainer.module.css'
+import themes from '../../styles/Themes.module.css';
 import { LCLSTRG_KEY } from '../../constants/constants';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import Timer from '../../components/Timer';
@@ -16,11 +17,17 @@ import { createSearchArray, getSearchArraysFromGrid, solvePuzzle } from '../../u
 import { bruteForce } from '../../utils/strategies/bruteForce';
 import { usePuzzleHistoryContext } from '../../contexts/PuzzleHistoryContext';
 import ProfileForm from '../../components/ProfileForm';
+import { useTheme } from '../../contexts/ThemeContext';
 
 
 const PuzzleContainer = () => {
 
+    const theme = useTheme();
+    const themeStyles = theme === 'light' ? themes.lightTheme : themes.darkTheme;
+
     const { savePuzzleToHistory, getPuzzleHistory } = usePuzzleHistoryContext();
+
+    const [showProfileModal, setShowProfileModal] = useState(false);
 
     const { difficulty } = useParams();
     const [puzzleData, setPuzzleData] = useState({
@@ -147,156 +154,166 @@ const PuzzleContainer = () => {
             window.localStorage.setItem(LCLSTRG_KEY, JSON.stringify(newData));
             return newData;
         })
-    
 
-    setUndoStack(prev => {
-        prev.pop()
-        return prev;
-    });
-    performValidityCheck(previousValue);
-}
-
-
-// Update completeness each time the grid changes
-useEffect(() => {
-    if (puzzleData.grid != null) {
-        const emptyCells = puzzleData.grid.split('').filter(chr => chr !== '-');
-        const completeness = emptyCells.length / 81 * 100;
-        setCompleteness(completeness);
+        setUndoStack(prev => {
+            prev.pop()
+            return prev;
+        });
+        performValidityCheck(previousValue);
     }
-    if (puzzleData.grid) {
-        setExhaustedDigits(getExhaustedDigits(puzzleData.grid));
-        const srcArrs = getSearchArraysFromGrid(puzzleData.grid);
-        setSearchArray(srcArrs);
+
+    const handleLeaderboardButtonClick = () => {
+        console.log('handleLeaderboardButtonClick');
+        if (true) {
+            setShowProfileModal(true);
+        }
     }
-}, [puzzleData, currentUser])
 
+    const profileModalCallback = () => {
+        setShowProfileModal(false);
+        submitPuzzle();
+    }
 
-// Submit the puzzle if completeness hits 100%
-useEffect(() => {
-    const submitCompletedPuzzle = async() => {
+    const submitPuzzle = async () => {
+
+        // First, submit the puzzle
         const formData = new FormData();
         formData.append("puzzle", puzzleData.id);
         formData.append("grid", puzzleData.grid);
         formData.append("started_on", puzzleData.start_time);
         formData.append("completed_at", new Date().toISOString());
         formData.append("completed", "true");
-
-        const profileFormData = new FormData();
-        profileFormData.append('nickname', 'mikey3');
-        profileFormData.append('country', 'IE');
-
-        try {
-            await axiosReq.post(
-                '/create_player_profile/',
-                profileFormData
-            );
-        } catch (err) {
-            console.log(err);
-        }
-        
         try {
             const {data} = await axiosReq.post(
                 '/create_puzzle_instance/', 
                 formData,
                 );
-            // window.setTimeout(() => history.push(`/leaderboard/${data.id}`), 2000);
+                history.push(`/leaderboard/${data.id}`)
         } catch (err) {
             console.log(err);
         }
     }
-    if (completeness >= 100) {
-        window.localStorage.removeItem(LCLSTRG_KEY);
-        savePuzzleToHistory(puzzleData.id, "sudoku", difficulty);
-        submitCompletedPuzzle();
+
+    // Update completeness each time the grid changes
+    useEffect(() => {
+        if (puzzleData.grid != null) {
+            const emptyCells = puzzleData.grid.split('').filter(chr => chr !== '-');
+            const completeness = emptyCells.length / 81 * 100;
+            setCompleteness(completeness);
+        }
+        if (puzzleData.grid) {
+            setExhaustedDigits(getExhaustedDigits(puzzleData.grid));
+            const srcArrs = getSearchArraysFromGrid(puzzleData.grid);
+            setSearchArray(srcArrs);
+        }
+    }, [puzzleData, currentUser])
+
+
+    // Submit the puzzle if completeness hits 100%
+    useEffect(() => {
+        if (completeness >= 100) {
+            window.localStorage.removeItem(LCLSTRG_KEY);
+            savePuzzleToHistory(puzzleData.id, "sudoku", difficulty);
+        }
+    }, [completeness, currentUser, puzzleData, history, difficulty, savePuzzleToHistory]) 
+
+    const callback = (grid, newSearchArray) => {
+        setPuzzleData(prev => ({
+            ...prev,
+            grid: grid,
+        }));
+        setSearchArray(newSearchArray);
     }
-}, [completeness, currentUser, puzzleData, history, difficulty, savePuzzleToHistory]) 
 
-const callback = (grid, newSearchArray) => {
-    setPuzzleData(prev => ({
-        ...prev,
-        grid: grid,
-    }));
-    setSearchArray(newSearchArray);
-}
+    const handleSolve = useCallback(() => {
+        console.log(puzzleData.grid, 'source')
+        solvePuzzle(puzzleData.grid, searchArray, callback);
+    }, [puzzleData, searchArray]);
 
-const handleSolve = useCallback(() => {
-    console.log(puzzleData.grid, 'source')
-    solvePuzzle(puzzleData.grid, searchArray, callback);
-}, [puzzleData, searchArray]);
+    const handleBruteForce = () => {
+        bruteForce(puzzleData.grid.slice(), callback);
+    }
 
-const handleBruteForce = () => {
-    bruteForce(puzzleData.grid.slice(), callback);
-}
+    // Set success message style
+    const successStyle = 
+        completeness === 100 
+        ? `${styles.SuccessMessage} ${styles.RevealMessage}` 
+        : `${styles.SuccessMessage}`;
 
-// Set success message style
-const successStyle = 
-    completeness === 100 
-    ? `${styles.SuccessMessage} ${styles.RevealMessage}` 
-    : `${styles.SuccessMessage}`;
+    return (
+        <Container>
+            <Row className="d-flex justify-content-center mt-3">
+                <p className="mr-5">{DIFFICULTY_LEVELS[difficulty].toUpperCase()}</p>
+                <Timer startTime={puzzleData.start_time}></Timer>
+            </Row>
+            <Row className="mt-2">
+                <Col xs={{ span: 8, offset: 2 }} sm={{ span: 6, offset: 3 }} md={{ span: 4, offset: 4 }}>
+                    <CompletenessDisplay
+                        completenessPercentage={Math.round(completeness)}
+                        shorthand />
+                </Col>
+            </Row>
+            <Row className="d-flex justify-content-center mt-4 position-relative">
+                <Puzzle
+                    grid={puzzleData?.grid}
+                    searchArray={searchArray}
+                    showNotes={showNotes}
+                    selectedCell={selectedCellIndex}
+                    handleCellSelection={handleCellSelection}
+                    warningGroup={warningGroup}
+                    clashingCell={clashingCell}
+                    completed={completeness === 100} />
+                <div className={`${successStyle} text-center`}>
+                    <h1>Well Done!</h1>
+                    <Button 
+                        className={btnStyles.Button}
+                        onClick={handleLeaderboardButtonClick}
+                        >View Leaderboard</Button>
+                    
+                </div>
+            </Row>
+            <Row className="d-flex justify-content-center mt-3">
+                <DigitChooser
+                    exhaustedDigits={exhaustedDigits}
+                    handleDigitChoice={handleDigitChoice} />
 
-return (
-    <Container>
-        <Row className="d-flex justify-content-center mt-3">
-            <p className="mr-5">{DIFFICULTY_LEVELS[difficulty].toUpperCase()}</p>
-            <Timer startTime={puzzleData.start_time}></Timer>
-        </Row>
-        <Row className="mt-2">
-            <Col xs={{ span: 8, offset: 2 }} sm={{ span: 6, offset: 3 }} md={{ span: 4, offset: 4 }}>
-                <CompletenessDisplay
-                    completenessPercentage={Math.round(completeness)}
-                    shorthand />
-            </Col>
-        </Row>
-        <Row className="d-flex justify-content-center mt-4 position-relative">
-            <Puzzle
-                grid={puzzleData?.grid}
-                searchArray={searchArray}
-                showNotes={showNotes}
-                selectedCell={selectedCellIndex}
-                handleCellSelection={handleCellSelection}
-                warningGroup={warningGroup}
-                clashingCell={clashingCell}
-                completed={completeness === 100} />
-            <div className={successStyle}>
-                <h1>Well Done!</h1>
-                <Button>Leaderboard</Button>
-                
-            </div>
-        </Row>
-        <Row className="d-flex justify-content-center mt-3">
-            <DigitChooser
-                exhaustedDigits={exhaustedDigits}
-                handleDigitChoice={handleDigitChoice} />
+            </Row>
+            <Row className="d-flex justify-content-center mt-3">
+                <Button
+                    className={`${btnStyles.Button} mx-2`}
+                    onClick={handleUndo}>
+                    <i className="fa-solid fa-arrow-rotate-left"></i>
+                </Button>
+                <Button
+                    className={`${btnStyles.Button} mx-2`}
+                    onClick={handleSolve}>
+                    Solve
+                </Button>
+                <Button
+                    className={`${btnStyles.Button} mx-2`}
+                    onClick={handleBruteForce}>
+                    Brute Force
+                </Button>
+                <Button
+                    className={`${btnStyles.Button} mx-2`}
+                    onClick={toggleNotes}>
+                        Notes
+                </Button>
+            </Row>
 
-        </Row>
-        <Row className="d-flex justify-content-center mt-3">
-            <Button
-                className={`${btnStyles.Button} mx-2`}
-                onClick={handleUndo}>
-                <i className="fa-solid fa-arrow-rotate-left"></i>
-            </Button>
-            <Button
-                className={`${btnStyles.Button} mx-2`}
-                onClick={handleSolve}>
-                Solve
-            </Button>
-            <Button
-                className={`${btnStyles.Button} mx-2`}
-                onClick={handleBruteForce}>
-                Brute Force
-            </Button>
-            <Button
-                className={`${btnStyles.Button} mx-2`}
-                onClick={toggleNotes}>
-                    Notes
-            </Button>
-        </Row>
+            <Modal 
+                show={showProfileModal} 
+                onHide={() => setShowProfileModal(false)}
+                contentClassName={`${styles.ProfileModal} ${themeStyles}`}
+                centered
+            >
+                <Modal.Body>
+                    <ProfileForm callback={profileModalCallback} />
+                </Modal.Body>
+            </Modal>
 
-        <ProfileForm />
-
-    </Container>
-)
+        </Container>
+    )
 }
 
 export default PuzzleContainer

@@ -6,4 +6,5 @@ urlpatterns = [
         'create_player_profile/',
         views.CreatePlayerProfile.as_view(),
         name='create_player_profile'),
+    path('is_nickname_available/', views.IsNicknameAvailable.as_view()),
 ]

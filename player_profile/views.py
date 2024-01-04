@@ -6,6 +6,7 @@ from rest_framework import generics, status
 from rest_framework.renderers import BrowsableAPIRenderer, HTMLFormRenderer
 
 from .serializers import PlayerProfileSerializer
+from .models import PlayerProfile
 
 
 class CreatePlayerProfile(APIView):
@@ -18,4 +19,25 @@ class CreatePlayerProfile(APIView):
             instance = serializer.save()
             response = Response(status=status.HTTP_201_CREATED)
             response.set_cookie(settings.PLAYER_PROFILE_COOKIE, instance.uuid)
+            return response
+
+
+class IsNicknameAvailable(APIView):
+    http_method_names = ['get']
+
+    def get(self, request):
+        query = request.GET['nickname'] if request.GET else None
+        if query:
+            exists = PlayerProfile.objects.filter(nickname=query).exists()
+            boolean_value = 'true' if not exists else 'false'
+            response = Response(
+                status=status.HTTP_200_OK,
+                data={'available': boolean_value}
+            )
+            return response
+        else:
+            response = Response(
+                status=status.HTTP_200_OK,
+                data={'available': 'true'}
+            )
             return response
