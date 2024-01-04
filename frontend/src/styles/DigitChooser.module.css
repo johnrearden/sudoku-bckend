@@ -1,13 +1,11 @@
-:root {
-    --size: clamp(25px, calc(100vw / 12), 40px);
-}
-
 .Digit {
-    background-color: var(--thrd-color);
-    color: var(--fg-color);
-    border-radius: 10px;
+    background-color: var(--brgt-color) !important;
+    color: var(--fg-color) !important;
+    border-radius: 30%;
+    border: 2px solid var(--fg-color);
     width: calc(var(--size) - 4px);
     height: calc(var(--size) - 4px);
+    font-size: calc(var(--size) * 0.65);
     margin: 0 2px 0 2px;
     display: flex;
     justify-content: center;
@@ -16,7 +14,7 @@
 
 .Inactive_Digit {
     opacity: 0.3;
-    border-radius: 10px;
+    border-radius: 30%;
     width: calc(var(--size) - 4px);
     height: calc(var(--size) - 4px);
     margin: 0 2px 0 2px;
@@ -26,8 +24,8 @@
 }
 
 .Digit:hover {
-    background-color: var(--scnd-color);
-    border: 1px solid var(--thrd-color);
+    color: var(--brgt-color) !important;
+    background-color: var(--fg-color) !important;
     cursor: pointer;
 }
 

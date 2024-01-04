@@ -26,26 +26,32 @@ const ChooseDifficulty = ({ message, fadeIn }) => {
                 <h5>{message || 'Choose Difficulty Level'} </h5>
             </Row>
 
-            <Row className="d-flex justify-content-center mt-2">
+            <Row className="d-flex justify-content-center mt-4">
                 <Button
                     onClick={handleClick}
                     data-difficulty="0"
-                    className={`mx-2 ${btnStyles.Button}`}
+                    className={`mx-2 ${btnStyles.Button} w-25`}
                 >Easy</Button>
+            </Row>
+            <Row className="d-flex justify-content-center mt-2">
                 <Button
                     onClick={handleClick}
                     data-difficulty="1"
-                    className={`mx-2 ${btnStyles.Button}`}
+                    className={`mx-2 ${btnStyles.Button} w-25`}
                 >Medium</Button>
+            </Row>
+            <Row className="d-flex justify-content-center mt-2">
                 <Button
                     onClick={handleClick}
                     data-difficulty="2"
-                    className={`mx-2 ${btnStyles.Button}`}
+                    className={`mx-2 ${btnStyles.Button} w-25`}
                 >Hard</Button>
+            </Row>
+            <Row className="d-flex justify-content-center mt-2">
                 <Button
                     onClick={handleClick}
                     data-difficulty="3"
-                    className={`mx-2 ${btnStyles.Button}`}
+                    className={`mx-2 ${btnStyles.Button} w-25`}
                 >Vicious</Button>
             </Row>
         </div>

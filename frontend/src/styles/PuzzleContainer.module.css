@@ -16,7 +16,6 @@ i {
 }
 
 .SuccessMessage {
-    /* pointer-events: none; */
     position: absolute;
     color: var(--fg-color);
     top: 50%;
@@ -24,6 +23,14 @@ i {
     transform: translateY(-50%) translateX(-50%);
     opacity: 0;
     transition: 2s all;
+}
+
+.PointerEventsOn {
+    pointer-events: auto;
+}
+
+.PointerEventsOff {
+    pointer-events: none;
 }
 
 .ProfileModal {

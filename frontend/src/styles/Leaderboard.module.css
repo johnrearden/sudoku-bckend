@@ -1,6 +1,5 @@
 .RankingRow {
     color: var(--fg-color);
-    
 }
 
 .RankingHeader {
@@ -15,6 +14,11 @@
     animation: slideIn 0.7s;
     animation-timing-function: ease-in;
     animation-fill-mode: forwards;
+}
+
+.FlagBackground {
+    background-color: var(--thrd-color);
+    padding: 10px;
 }
 
 @keyframes slideIn {

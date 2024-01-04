@@ -249,8 +249,8 @@ const PuzzleContainer = () => {
     // Set success message style
     const successStyle = 
         completeness === 100 
-        ? `${styles.SuccessMessage} ${styles.RevealMessage}` 
-        : `${styles.SuccessMessage}`;
+        ? `${styles.SuccessMessage} ${styles.PointerEventsOn} ${styles.RevealMessage}` 
+        : `${styles.SuccessMessage} ${styles.PointerEventsOff}`;
 
     return (
         <Container>
@@ -278,7 +278,7 @@ const PuzzleContainer = () => {
                 <div className={`${successStyle} text-center`}>
                     <h1>Well Done!</h1>
                     <Button 
-                        className={btnStyles.Button}
+                        className={`${btnStyles.Button} mt-4`}
                         onClick={handleLeaderboardButtonClick}
                         >View Leaderboard</Button>
                     
@@ -301,6 +301,11 @@ const PuzzleContainer = () => {
                     onClick={toggleNotes}>
                         Notes
                 </Button>
+                <Button
+                    className={`${btnStyles.Button} mx-2`}
+                    onClick={handleBruteForce}>
+                    Brute Force
+                </Button>
                 { currentUser && (
                     <>
                         <Button
@@ -308,11 +313,7 @@ const PuzzleContainer = () => {
                             onClick={handleSolve}>
                             Solve
                         </Button>
-                        <Button
-                            className={`${btnStyles.Button} mx-2`}
-                            onClick={handleBruteForce}>
-                            Brute Force
-                        </Button>
+                        
                 </>
                 )}
             </Row>

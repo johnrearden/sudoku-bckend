@@ -72,16 +72,18 @@ const Leaderboard = () => {
                 <td>{data.puzzle_instance.owner_nickname}</td>
                 <td>{millisToTimeString(data.puzzle_instance.duration)}</td>
                 <td>
-                    <ReactCountryFlag
-                        className="emojiFlag"
-                        countryCode={data.puzzle_instance.owner_country}
-                        svg
-                        style={{
-                            fontSize: '1.5em',
-                            lineHeight: '1.5em',
-                        }}
-                        aria-label="United States"
-                    ></ReactCountryFlag>
+                    <div className={styles.FlagBackground}>
+                        <ReactCountryFlag
+                            className="emojiFlag"
+                            countryCode={data.puzzle_instance.owner_country}
+                            svg
+                            style={{
+                                fontSize: '1.5em',
+                                lineHeight: '1.5em',
+                            }}
+                            aria-label="United States"
+                        ></ReactCountryFlag>
+                    </div>
                 </td>
             </tr>
         ))

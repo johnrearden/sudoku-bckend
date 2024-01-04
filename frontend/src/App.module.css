@@ -1,5 +1,5 @@
 :root {
-    --size: clamp(25px, calc(100vw / 12), 55px);
+    --size: clamp(25px, calc(100vw / 10), 50px);
 }
 
 .App {
