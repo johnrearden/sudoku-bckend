@@ -45,7 +45,7 @@ const Leaderboard = () => {
                         lineHeight: '1.5em',
                     }}
                     aria-label="United States"
-                ></ReactCountryFlag>
+                />
             </td>
         </tr>
     ));
@@ -72,18 +72,16 @@ const Leaderboard = () => {
                 <td>{data.puzzle_instance.owner_nickname}</td>
                 <td>{millisToTimeString(data.puzzle_instance.duration)}</td>
                 <td>
-                    <div className={styles.FlagBackground}>
-                        <ReactCountryFlag
-                            className="emojiFlag"
-                            countryCode={data.puzzle_instance.owner_country}
-                            svg
-                            style={{
-                                fontSize: '1.5em',
-                                lineHeight: '1.5em',
-                            }}
-                            aria-label="United States"
-                        ></ReactCountryFlag>
-                    </div>
+                    <ReactCountryFlag
+                        className="emojiFlag"
+                        countryCode={data.puzzle_instance.owner_country}
+                        svg
+                        style={{
+                            fontSize: '1.5em',
+                            lineHeight: '1.5em',
+                        }}
+                        aria-label="United States"
+                    />
                 </td>
             </tr>
         ))
@@ -91,11 +89,11 @@ const Leaderboard = () => {
 
     return (
         <>
-            <Row className="d-flex justify-content-center mt-4">
+            <Row className="d-flex justify-content-center mt-3">
                 <h4>Leaderboard</h4>
             </Row>
             {data && (
-                <Row className="d-flex justify-content-center mt-4">
+                <Row className="d-flex justify-content-center mt-2">
                     <h6>{data.puzzle_instance.difficulty} Level</h6>
                 </Row>
             )}
@@ -118,6 +116,7 @@ const Leaderboard = () => {
                 </Col>
 
             </Row>
+            <hr></hr>
             <ChooseDifficulty message="Play again?" fadeIn/>
 
         </>

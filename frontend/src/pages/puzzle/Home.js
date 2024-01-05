@@ -19,7 +19,7 @@ const Home = () => {
 
     return (
         <>
-            <div><h1 className="text-center mt-5">Sudoku<small className="text-muted"> (demo)</small></h1></div>
+            <div><h1 className="text-center mt-5 mb-3">Sudoku<small className="text-muted"> (demo)</small></h1></div>
             <ChooseDifficulty />
 
             <Row className="justify-content-center mt-5">

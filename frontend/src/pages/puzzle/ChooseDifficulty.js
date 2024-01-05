@@ -22,11 +22,11 @@ const ChooseDifficulty = ({ message, fadeIn }) => {
 
     return (
         <div className={fadeIn && styles.FadeIn}>
-            <Row className="d-flex justify-content-center text-center mt-5">
+            <Row className="d-flex justify-content-center text-center mt-1">
                 <h5>{message || 'Choose Difficulty Level'} </h5>
             </Row>
 
-            <Row className="d-flex justify-content-center mt-4">
+            <Row className="d-flex justify-content-center mt-2">
                 <Button
                     onClick={handleClick}
                     data-difficulty="0"

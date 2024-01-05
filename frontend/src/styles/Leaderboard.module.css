@@ -21,6 +21,10 @@
     padding: 10px;
 }
 
+hr {
+    color: var(--fg-color) !important;
+}
+
 @keyframes slideIn {
     from {
         transform: translateX(-100%);
