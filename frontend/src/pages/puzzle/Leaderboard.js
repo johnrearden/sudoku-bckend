@@ -117,7 +117,7 @@ const Leaderboard = () => {
 
             </Row>
             <hr></hr>
-            <ChooseDifficulty message="Play again?" fadeIn/>
+            <ChooseDifficulty message="Play again?" fadeIn square/>
 
         </>
     )

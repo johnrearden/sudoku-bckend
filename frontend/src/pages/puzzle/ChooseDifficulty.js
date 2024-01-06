@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom'
 import { LCLSTRG_KEY } from '../../constants/constants'
 
 
-const ChooseDifficulty = ({ message, fadeIn }) => {
+const ChooseDifficulty = ({ message, fadeIn, square }) => {
 
     const history = useHistory();
 
@@ -20,40 +20,72 @@ const ChooseDifficulty = ({ message, fadeIn }) => {
         history.push(`/get_puzzle/${difficulty}`)
     }
 
+    const levelOne = (
+        <Button
+            onClick={handleClick}
+            data-difficulty="0"
+            className={`mx-2 ${btnStyles.Button} w-25`}
+        >Easy</Button>
+    )
+
+    const levelTwo = (
+        <Button
+            onClick={handleClick}
+            data-difficulty="1"
+            className={`mx-2 ${btnStyles.Button} w-25`}
+        >Medium</Button>
+    )
+
+    const levelThree = (
+        <Button
+            onClick={handleClick}
+            data-difficulty="2"
+            className={`mx-2 ${btnStyles.Button} w-25`}
+        >Hard</Button>
+    )
+
+    const levelFour = (
+        <Button
+            onClick={handleClick}
+            data-difficulty="3"
+            className={`mx-2 ${btnStyles.Button} w-25`}
+        >Vicious</Button>
+    )
+
     return (
         <div className={fadeIn && styles.FadeIn}>
             <Row className="d-flex justify-content-center text-center mt-1">
                 <h5>{message || 'Choose Difficulty Level'} </h5>
             </Row>
 
-            <Row className="d-flex justify-content-center mt-2">
-                <Button
-                    onClick={handleClick}
-                    data-difficulty="0"
-                    className={`mx-2 ${btnStyles.Button} w-25`}
-                >Easy</Button>
-            </Row>
-            <Row className="d-flex justify-content-center mt-2">
-                <Button
-                    onClick={handleClick}
-                    data-difficulty="1"
-                    className={`mx-2 ${btnStyles.Button} w-25`}
-                >Medium</Button>
-            </Row>
-            <Row className="d-flex justify-content-center mt-2">
-                <Button
-                    onClick={handleClick}
-                    data-difficulty="2"
-                    className={`mx-2 ${btnStyles.Button} w-25`}
-                >Hard</Button>
-            </Row>
-            <Row className="d-flex justify-content-center mt-2">
-                <Button
-                    onClick={handleClick}
-                    data-difficulty="3"
-                    className={`mx-2 ${btnStyles.Button} w-25`}
-                >Vicious</Button>
-            </Row>
+            { square ? (
+                <>
+                    <Row className="d-flex justify-content-center mt-2">
+                        { levelOne }
+                        { levelTwo }
+                    </Row>
+                    <Row className="d-flex justify-content-center mt-2">
+                        { levelThree }
+                        { levelFour }
+                    </Row>
+                </>
+            ) : (
+                <>
+                    <Row className="d-flex justify-content-center mt-2">
+                        { levelOne }
+                    </Row>
+                    <Row className="d-flex justify-content-center mt-2">
+                        { levelTwo }
+                    </Row>
+                    <Row className="d-flex justify-content-center mt-2">
+                        { levelThree }
+                    </Row>
+                    <Row className="d-flex justify-content-center mt-2">
+                        { levelFour }
+                    </Row>
+                </>
+            )}
+            
         </div>
     )
 }

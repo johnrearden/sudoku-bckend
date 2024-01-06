@@ -280,7 +280,7 @@ const PuzzleContainer = () => {
                     <Button 
                         className={`${btnStyles.Button} mt-4`}
                         onClick={handleLeaderboardButtonClick}
-                        >View Leaderboard</Button>
+                        >Leaderboard</Button>
                     
                 </div>
             </Row>
