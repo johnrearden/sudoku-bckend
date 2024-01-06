@@ -90,7 +90,7 @@ const PuzzleContainer = () => {
         }
 
         const previousPuzzle = window.localStorage.getItem(LCLSTRG_KEY);
-        if (previousPuzzle && false) {
+        if (previousPuzzle) {
             const puzzleData = JSON.parse(previousPuzzle);
             setPuzzleData(puzzleData);
         } else {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { millisToTimeString } from '../utils/utils';
+import styles from '../styles/Timer.module.css';
 
 const Timer = ({ startTime }) => {
 
@@ -20,7 +21,7 @@ const Timer = ({ startTime }) => {
     const displayString = millisToTimeString(time);
 
     return (
-        <div>{displayString}</div>
+        <div className={styles.Display}>{displayString}</div>
     )
 }
 

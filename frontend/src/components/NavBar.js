@@ -91,7 +91,7 @@ const NavBar = () => {
                         {/* Button to toggle light/dark theme */}
                         <button
                             aria-label="theme-toggle-button"
-                            className={`${btnStyles.Button} mr-3`}
+                            className={`${btnStyles.NavbarButton} mr-3`}
                             onClick={handleThemeToggle}
                         >
                             {theme === 'light' ? (

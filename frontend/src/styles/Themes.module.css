@@ -3,10 +3,11 @@
     --fg-color: #dad9d9;
     --scnd-color: #64553f;
     --thrd-color: #444443;
-    --brgt-color: #4d3f1e;
+    --brgt-color: #523f14;
+    --button-color: #41310b;
     --warn-color: #e0492b;
     --nav-bckgnd: #363636;
-    --shadow-color: #1b1b1b;
+    --shadow-color: rgb(22, 22, 22);
 }
 
 .lightTheme {
@@ -15,6 +16,7 @@
     --scnd-color: #e4b85f;
     --thrd-color: #8d7f6f;
     --brgt-color: #e4dfcb;
+    --button-color: #bdb79c;
     --warn-color: #e0492b;
     --nav-bckgnd: #a6a29a;
     --shadow-color: #63594e;
