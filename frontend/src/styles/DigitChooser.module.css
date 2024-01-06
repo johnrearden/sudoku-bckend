@@ -2,7 +2,8 @@
     background: linear-gradient(var(--brgt-color), var(--button-color));
     color: var(--fg-color) !important;
     border-radius: 10px;
-    border: 2px solid var(--bg-color);
+    border: none;
+    margin: 2px;
     box-shadow: 1px 1px 2px 1px var(--shadow-color);
     width: calc(var(--size) - 4px);
     height: calc(var(--size) - 4px);
@@ -26,6 +27,7 @@
 
 .Digit:hover {
     border: 2px solid var(--fg-color);
+    margin: 0 2px;
     cursor: pointer;
 }
 
