@@ -41,7 +41,7 @@ const ChooseDifficulty = ({ message, fadeIn, square }) => {
             onClick={handleClick}
             data-difficulty="2"
             className={`mx-2 ${btnStyles.Button} w-25`}
-        >Hard</Button>
+        >Tricky</Button>
     )
 
     const levelFour = (
@@ -49,7 +49,7 @@ const ChooseDifficulty = ({ message, fadeIn, square }) => {
             onClick={handleClick}
             data-difficulty="3"
             className={`mx-2 ${btnStyles.Button} w-25`}
-        >Vicious</Button>
+        >Hard</Button>
     )
 
     return (
