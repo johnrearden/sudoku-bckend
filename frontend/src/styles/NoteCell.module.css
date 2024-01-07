@@ -12,5 +12,5 @@
 
 .Digit {
     text-align: center;
-    font-size: calc(var(--size) * 0.2);
+    font-size: calc(var(--size) * 0.22);
 }
