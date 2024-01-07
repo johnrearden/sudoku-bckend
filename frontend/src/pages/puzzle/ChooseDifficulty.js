@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Row } from 'react-bootstrap'
+import { Row } from 'react-bootstrap'
 import btnStyles from '../../styles/Button.module.css'
 import styles from '../../styles/ChooseDifficulty.module.css';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom'
@@ -17,39 +17,39 @@ const ChooseDifficulty = ({ message, fadeIn, square }) => {
         // Selecting a new puzzle destroys the old one, if present
         window.localStorage.removeItem(LCLSTRG_KEY);
 
-        history.push(`/get_puzzle/${difficulty}`)
+        history.push(`/get_puzzle/${difficulty}`)   
     }
 
     const levelOne = (
-        <Button
+        <button
             onClick={handleClick}
             data-difficulty="0"
-            className={`mx-2 ${btnStyles.Button} w-25`}
-        >Easy</Button>
+            className={` ${btnStyles.Button} ${btnStyles.MinWidth}`}
+        >Easy</button>
     )
 
     const levelTwo = (
-        <Button
+        <button
             onClick={handleClick}
             data-difficulty="1"
-            className={`mx-2 ${btnStyles.Button} w-25`}
-        >Medium</Button>
+            className={` ${btnStyles.Button}  ${btnStyles.MinWidth}`}
+        >Medium</button>
     )
 
     const levelThree = (
-        <Button
+        <button
             onClick={handleClick}
             data-difficulty="2"
-            className={`mx-2 ${btnStyles.Button} w-25`}
-        >Tricky</Button>
+            className={` ${btnStyles.Button}  ${btnStyles.MinWidth}`}
+        >Tricky</button>
     )
 
     const levelFour = (
-        <Button
+        <button
             onClick={handleClick}
             data-difficulty="3"
-            className={`mx-2 ${btnStyles.Button} w-25`}
-        >Hard</Button>
+            className={` ${btnStyles.Button}  ${btnStyles.MinWidth}`}
+        >Hard</button>
     )
 
     return (

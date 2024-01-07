@@ -277,10 +277,10 @@ const PuzzleContainer = () => {
                     completed={completeness === 100} />
                 <div className={`${successStyle} text-center`}>
                     <h1>Well Done!</h1>
-                    <Button 
+                    <button 
                         className={`${btnStyles.Button} mt-4`}
                         onClick={handleLeaderboardButtonClick}
-                        >Leaderboard</Button>
+                        >Leaderboard</button>
                     
                 </div>
             </Row>
@@ -291,21 +291,21 @@ const PuzzleContainer = () => {
 
             </Row>
             <Row className="d-flex justify-content-center mt-3">
-                <Button
+                <button
                     className={`${btnStyles.Button} mx-2`}
                     onClick={handleUndo}>
                     <i className="fa-solid fa-arrow-rotate-left"></i>
-                </Button>
-                <Button
+                </button>
+                <button
                     className={`${btnStyles.Button} mx-2`}
                     onClick={toggleNotes}>
                         Notes
-                </Button>
-                <Button
+                </button>
+                <button
                     className={`${btnStyles.Button} mx-2`}
                     onClick={handleBruteForce}>
                     Brute Force
-                </Button>
+                </button>
                 { currentUser && (
                     <>
                         <Button

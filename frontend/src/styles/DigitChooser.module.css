@@ -3,15 +3,20 @@
     color: var(--fg-color) !important;
     border-radius: 10px;
     border: none;
-    margin: 2px;
     box-shadow: 1px 1px 2px 1px var(--shadow-color);
     width: calc(var(--size) - 4px);
     height: calc(var(--size) - 4px);
     font-size: calc(var(--size) * 0.6);
-    margin: 0 2px 0 2px;
+    margin: 0 2px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.Digit:hover {
+    border: 2px solid var(--fg-color);
+    margin: 0 2px;
+    cursor: pointer;
 }
 
 .Inactive_Digit {
@@ -25,11 +30,7 @@
     align-items: center;
 }
 
-.Digit:hover {
-    border: 2px solid var(--fg-color);
-    margin: 0 2px;
-    cursor: pointer;
-}
+
 
 .Inactive {
     background-color: grey;

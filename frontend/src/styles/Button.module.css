@@ -3,21 +3,21 @@
     align-self: center;
     border-radius: 10px;
     padding: 4px 10px;
-    margin-left: 2px;
-    margin-right: 2px;
     background: linear-gradient(var(--brgt-color), var(--button-color));
     color: var(--fg-color) !important;
-    /* border: 2px solid var(--bg-color); */
     border: none;
-    margin: 2px;
+    margin:  2px 5px !important;
     box-shadow: 1px 1px 2px 1px var(--shadow-color);
 }
 
+.MinWidth {
+    min-width: 120px;
+}
+
 .Button:hover {
-    border-color: transparent;
+    margin: 0 3px !important;
     cursor: pointer;
     border: 2px solid var(--fg-color);
-    margin: 0;
 }
 
 .Button i {
