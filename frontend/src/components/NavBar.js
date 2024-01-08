@@ -46,14 +46,14 @@ const NavBar = () => {
                 activeClassName={styles.Active}
                 to="/signin">
                 <i className="fa-solid fa-arrow-right-to-bracket"></i>
-                {/* <span>Login</span> */}
+                <span>Login</span>
             </NavLink>
             <NavLink
                 className={styles.NavLink}
                 activeClassName={styles.Active}
                 to="/signup">
                 <i className="fa-regular fa-user"></i>
-                {/* <span>Sign Up</span> */}
+                <span>Sign Up</span>
             </NavLink>
         </>
     );
@@ -68,7 +68,7 @@ const NavBar = () => {
                     handleSignout();
                 }}>
                 <i className="fa-solid fa-person-walking-arrow-right"></i>
-                {/* <span>Logout</span> */}
+                <span>Logout</span>
             </NavLink>
         </>)
 
