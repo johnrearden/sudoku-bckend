@@ -77,7 +77,10 @@ const NavBar = () => {
             <Container>
                 <NavLink to="/">
                     <Navbar.Brand>
-                        <h2 className={styles.FreckleFaceFont}>Sudoku</h2>
+                        <h2 
+                            className={styles.FreckleFaceFont}
+                            title="Return to home page"
+                        >Sudoku</h2>
                     </Navbar.Brand>
                 </NavLink>
                 <Navbar.Toggle
@@ -93,6 +96,7 @@ const NavBar = () => {
                             aria-label="theme-toggle-button"
                             className={`${btnStyles.NavbarButton} mr-3`}
                             onClick={handleThemeToggle}
+                            title={`Switch to ${theme==="light" ? "dark" : "light"} theme`}
                         >
                             {theme === 'light' ? (
                                 <i className="fa-solid fa-moon"></i>
@@ -104,6 +108,7 @@ const NavBar = () => {
                         <NavLink exact
                             className={styles.NavLink}
                             activeClassName={styles.Active}
+                            title="Return to home page"
                             to="/">
                             <div className='d-flex align-items-center'>
                                 <i className="fa-solid fa-house"></i>

@@ -1,10 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import user from "@testing-library/user-event";
 import PuzzleCell from "../PuzzleCell";
+import styles from '../../styles/PuzzleCell.module.css';
 
-describe("PuzzleCell tests", () => {
+describe("PuzzleCells", () => {
 
-    test("should render the value prop if value is digit", async() => {
+    test("should render the value prop if value is digit", () => {
         const value = "1";
         const index = 0;
         const selected = false;
@@ -17,12 +18,12 @@ describe("PuzzleCell tests", () => {
                 warning={warning} illegal={illegal} correct={correct}/>
         );
 
-        const digitDiv = await screen.findByText(value);
+        const digitDiv = screen.getByText(value);
         expect(digitDiv).toBeInTheDocument();
         expect(digitDiv).toHaveTextContent("1");
     });
 
-    test("should render an empty string if value is not digit", async() => {
+    test("should render an empty string if value is not digit", () => {
         const value = "-";
         const index = 0;
         const selected = false;
@@ -40,7 +41,7 @@ describe("PuzzleCell tests", () => {
         expect(digitDiv).toHaveTextContent("");
     });
 
-    it("should call the handleSelection function prop on user click", async () => {
+    it("should call the handleSelection function prop on user click", () => {
         const value = "1";
         const index = 0;
         const selected = false;
@@ -56,10 +57,82 @@ describe("PuzzleCell tests", () => {
                 handleSelection={mockCallback}/>
         );
 
-        const digitDiv = await screen.findByText(value);
+        const digitDiv = screen.getByText(value);
         user.click(digitDiv);
 
         expect(mockCallback).toHaveBeenCalled();
         expect(mockCallback).toHaveBeenCalledWith(index);
     });
+
+    it("should have the class 'Selected' if props.selected is true", () => {
+        const value = "1";
+        const index = 0;
+        const selected = true;
+        const warning = false;
+        const illegal = false;
+        const correct = false;
+
+        render(
+            <PuzzleCell value={value} index={index} selected={selected}
+                warning={warning} illegal={illegal} correct={correct}/>
+        );
+
+        const digitDiv = screen.getByText(value);
+        console.log(digitDiv.classList);
+        expect(digitDiv).toHaveClass(styles.Selected);
+    })
+
+    it("should have the class 'Warning' if props.warning is true", () => {
+        const value = "1";
+        const index = 0;
+        const selected = false;
+        const warning = true;
+        const illegal = false;
+        const correct = false;
+
+        render(
+            <PuzzleCell value={value} index={index} selected={selected}
+                warning={warning} illegal={illegal} correct={correct}/>
+        );
+
+        const digitDiv = screen.getByText(value);
+        console.log(digitDiv.classList);
+        expect(digitDiv).toHaveClass(styles.Warning);
+    });
+
+    it("should have the class 'Clashing_cell' if props.illegal is true", () => {
+        const value = "1";
+        const index = 0;
+        const selected = false;
+        const warning = false;
+        const illegal = true;
+        const correct = false;
+
+        render(
+            <PuzzleCell value={value} index={index} selected={selected}
+                warning={warning} illegal={illegal} correct={correct}/>
+        );
+
+        const digitDiv = screen.getByText(value);
+        console.log(digitDiv.classList);
+        expect(digitDiv).toHaveClass(styles.Clashing_Cell);
+    });
+
+    it("should have the class 'Offending_Choice' if props.selected and props.warning are true", () => {
+        const value = "1";
+        const index = 0;
+        const selected = true;
+        const warning = true;
+        const illegal = false;
+        const correct = false;
+
+        render(
+            <PuzzleCell value={value} index={index} selected={selected}
+                warning={warning} illegal={illegal} correct={correct}/>
+        );
+
+        const digitDiv = screen.getByText(value);
+        console.log(digitDiv.classList);
+        expect(digitDiv).toHaveClass(styles.Offending_Choice);
+    })
 })
