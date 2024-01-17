@@ -1,0 +1,3 @@
+If a user deletes their profile cookie, useProfile is unaware of this, and so will
+allow the call to create_puzzle_instance to go through as normal.
+

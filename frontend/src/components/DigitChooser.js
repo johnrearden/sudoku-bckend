@@ -14,6 +14,7 @@ const DigitChooser = (props) => {
             className={active ? styles.Digit : styles.Inactive_Digit}
             key={digit}
             onClick={active ? () => handleDigitChoice(digit) : null}
+            data-testid={`digit_chooser_${digit}`}
         >
             {digit}
         </div>
