@@ -27,7 +27,7 @@ const Puzzle = ({
                 handleSelection={handleCellSelection}/>
         ) : (
             showNotes ? (
-                <NoteCell array={searchArray[idx]} key={idx}/>
+                <NoteCell searchArray={searchArray[idx]} key={idx}/>
             ) :
             (
                 <PuzzleCell

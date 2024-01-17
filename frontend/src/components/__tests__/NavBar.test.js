@@ -16,7 +16,7 @@ test('renders NavBar', () => {
     expect(signInLink).toBeInTheDocument();
 })
 
-xtest('renders login and logout buttons again on signout', async () => {
+test.skip('renders login and logout buttons again on signout', async () => {
     render(
         <Router>
             <CurrentUserProvider>

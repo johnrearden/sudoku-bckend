@@ -78,7 +78,6 @@ describe("PuzzleCells", () => {
         );
 
         const digitDiv = screen.getByText(value);
-        console.log(digitDiv.classList);
         expect(digitDiv).toHaveClass(styles.Selected);
     })
 
@@ -95,8 +94,7 @@ describe("PuzzleCells", () => {
                 warning={warning} illegal={illegal} correct={correct}/>
         );
 
-        const digitDiv = screen.getByText(value);
-        console.log(digitDiv.classList);
+        const digitDiv = screen.getByText(value);w
         expect(digitDiv).toHaveClass(styles.Warning);
     });
 
@@ -114,7 +112,6 @@ describe("PuzzleCells", () => {
         );
 
         const digitDiv = screen.getByText(value);
-        console.log(digitDiv.classList);
         expect(digitDiv).toHaveClass(styles.Clashing_Cell);
     });
 
@@ -132,7 +129,6 @@ describe("PuzzleCells", () => {
         );
 
         const digitDiv = screen.getByText(value);
-        console.log(digitDiv.classList);
         expect(digitDiv).toHaveClass(styles.Offending_Choice);
     })
 })

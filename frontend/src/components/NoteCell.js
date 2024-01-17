@@ -1,26 +1,36 @@
 import React from 'react';
 import styles from '../styles/NoteCell.module.css';
 
-const NoteCell = ({ array }) => {
+const NoteCell = ({ searchArray }) => {
 
     const digits = [];
     for (let i = 1; i <= 9; i++) {
         const char = i.toString();
-        if (array.includes(char)) {
+        if (searchArray.includes(char)) {
             digits.push (
-                <span className={styles.Digit} key={i}>
+                <span 
+                    className={styles.Digit}
+                    key={i}
+                    data-testid="note_span"
+                >
                     {char}
                 </span>
             )
         } else {
             digits.push(
-                <span key={i}></span>
+                <span 
+                    key={i}
+                    data-testid="note_span"
+                ></span>
             )
         }
     }
 
     return ( 
-        <div className={styles.Cell}>
+        <div 
+            className={styles.Cell}
+            data-testid={`note_cell`}
+        >
             { digits }
         </div>
     )

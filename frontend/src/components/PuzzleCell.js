@@ -48,6 +48,7 @@ const PuzzleCell = (props) => {
             className={className}
             onClick={() => handleSelection(index)}
             aria-label="puzzle cell"
+            data-testid={`puzzle_cell_${index}`}
         >
             {isDigit(value) ? value : ""}
         </div>
