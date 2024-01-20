@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import '@testing-library/jest-dom';
 import Puzzle from "../Puzzle";
 import styles from "../../styles/PuzzleCell.module.css";
 
@@ -15,7 +16,8 @@ describe("A Puzzle component", () => {
                 selectedCell={-1}
                 warningGroup={[]}
                 clashingCell={-1}
-                completed={false}    
+                completed={false}  
+                loaded={true}  
             />
         );
         const cells = screen.getAllByTestId(/puzzle_cell_/i);
@@ -33,7 +35,8 @@ describe("A Puzzle component", () => {
                 selectedCell={-1}
                 warningGroup={[]}
                 clashingCell={-1}
-                completed={false}    
+                completed={false}  
+                loaded={true}
             />
         );
         const noteCellCount = SAMPLE_GRID.split("").filter(char => char === "-").length;
@@ -50,7 +53,8 @@ describe("A Puzzle component", () => {
                 selectedCell={-1}
                 warningGroup={[]}
                 clashingCell={-1}
-                completed={false}    
+                completed={false} 
+                loaded={true}   
             />
         );
         const cells = screen.getAllByTestId(/puzzle_cell_/i);
@@ -74,7 +78,8 @@ describe("A Puzzle component", () => {
                 selectedCell={-1}
                 warningGroup={warningGroup}
                 clashingCell={-1}
-                completed={false}    
+                completed={false}   
+                loaded={true} 
             />
         );
         const cells = screen.getAllByTestId(/puzzle_cell_/i);

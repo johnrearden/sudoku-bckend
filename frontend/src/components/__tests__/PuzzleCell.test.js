@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import user from "@testing-library/user-event";
+import '@testing-library/jest-dom';
 import PuzzleCell from "../PuzzleCell";
 import styles from '../../styles/PuzzleCell.module.css';
 
@@ -15,7 +16,8 @@ describe("PuzzleCells", () => {
 
         render(
             <PuzzleCell value={value} index={index} selected={selected}
-                warning={warning} illegal={illegal} correct={correct}/>
+                warning={warning} illegal={illegal} correct={correct}
+                loaded={true}/>
         );
 
         const digitDiv = screen.getByText(value);
@@ -33,7 +35,8 @@ describe("PuzzleCells", () => {
 
         const { container } = render(
             <PuzzleCell value={value} index={index} selected={selected}
-                warning={warning} illegal={illegal} correct={correct}/>
+                warning={warning} illegal={illegal} correct={correct}
+                loaded={true}/>
         );
 
         const digitDiv = container.querySelector("[aria-label='puzzle cell']")
@@ -54,7 +57,7 @@ describe("PuzzleCells", () => {
         render(
             <PuzzleCell value={value} index={index} selected={selected}
                 warning={warning} illegal={illegal} correct={correct}
-                handleSelection={mockCallback}/>
+                handleSelection={mockCallback} loaded={true}/>
         );
 
         const digitDiv = screen.getByText(value);
@@ -74,7 +77,8 @@ describe("PuzzleCells", () => {
 
         render(
             <PuzzleCell value={value} index={index} selected={selected}
-                warning={warning} illegal={illegal} correct={correct}/>
+                warning={warning} illegal={illegal} correct={correct}
+                loaded={true}/>
         );
 
         const digitDiv = screen.getByText(value);
@@ -91,10 +95,11 @@ describe("PuzzleCells", () => {
 
         render(
             <PuzzleCell value={value} index={index} selected={selected}
-                warning={warning} illegal={illegal} correct={correct}/>
+                warning={warning} illegal={illegal} correct={correct}
+                loaded={true}/>
         );
 
-        const digitDiv = screen.getByText(value);w
+        const digitDiv = screen.getByText(value);
         expect(digitDiv).toHaveClass(styles.Warning);
     });
 
@@ -108,7 +113,8 @@ describe("PuzzleCells", () => {
 
         render(
             <PuzzleCell value={value} index={index} selected={selected}
-                warning={warning} illegal={illegal} correct={correct}/>
+                warning={warning} illegal={illegal} correct={correct}
+                loaded={true}/>
         );
 
         const digitDiv = screen.getByText(value);
@@ -125,7 +131,8 @@ describe("PuzzleCells", () => {
 
         render(
             <PuzzleCell value={value} index={index} selected={selected}
-                warning={warning} illegal={illegal} correct={correct}/>
+                warning={warning} illegal={illegal} correct={correct}
+                loaded={true}/>
         );
 
         const digitDiv = screen.getByText(value);

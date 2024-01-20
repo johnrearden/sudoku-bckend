@@ -10,7 +10,7 @@ const PuzzleCell = (props) => {
         warning,
         illegal,
         handleSelection,
-        correct } = props;
+        correct} = props;
 
     const [className, setClassName] = useState(styles.Cell);
 

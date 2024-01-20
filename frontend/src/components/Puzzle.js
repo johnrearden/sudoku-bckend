@@ -38,7 +38,8 @@ const Puzzle = ({
                     warning={warningGroup.includes(idx)}
                     illegal={idx===clashingCell}
                     correct={completed}
-                    handleSelection={handleCellSelection}/>
+                    handleSelection={handleCellSelection}
+                    />
             )
             
         )

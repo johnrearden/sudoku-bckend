@@ -8,6 +8,7 @@ export function createServer(handlerConfig) {
                 config.res(req, res, ctx))); 
         });
     });
+    
     const server = setupServer(...handlers);
 
     beforeAll(() => server.listen());

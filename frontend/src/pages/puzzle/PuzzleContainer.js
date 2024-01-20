@@ -82,7 +82,6 @@ const PuzzleContainer = () => {
                 setPuzzleData(data);
                 const searchArrays = getSearchArraysFromGrid(data.grid);
                 setSearchArray(searchArrays);
-
             } catch (err) {
                 console.log(err);
                 history.push('/');
@@ -274,7 +273,8 @@ const PuzzleContainer = () => {
                     handleCellSelection={handleCellSelection}
                     warningGroup={warningGroup}
                     clashingCell={clashingCell}
-                    completed={completeness === 100} />
+                    completed={completeness === 100}
+                    />
                 <div className={`${successStyle} text-center`}>
                     <h1>Well Done!</h1>
                     <button 
@@ -293,7 +293,9 @@ const PuzzleContainer = () => {
             <Row className="d-flex justify-content-center mt-3">
                 <button
                     className={`${btnStyles.Button} mx-2`}
-                    onClick={handleUndo}>
+                    onClick={handleUndo}
+                    aria-label="back button"
+                    >
                     <i className="fa-solid fa-arrow-rotate-left"></i>
                 </button>
                 <button

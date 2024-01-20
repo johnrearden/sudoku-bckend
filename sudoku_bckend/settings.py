@@ -68,6 +68,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '8000-johnrearden-sudokubcken-a1vim0dmayo.ws-eu107.gitpod.io',
     '8000-johnrearden-sudokubcken-325ravuc6ch.ws-eu107.gitpod.io',
+    '127.0.0.1',
 ]
 
 
