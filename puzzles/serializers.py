@@ -4,8 +4,6 @@ from player_profile.models import PlayerProfile
 from datetime import datetime
 
 
-
-
 class SudokuPuzzleSerializer(serializers.ModelSerializer):
     creator = serializers.ReadOnlyField(source='created_by.username')
     is_owner = serializers.SerializerMethodField()

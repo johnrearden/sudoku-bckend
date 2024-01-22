@@ -24,13 +24,17 @@ const PuzzleCell = (props) => {
         const warningClass = warning ? styles.Warning : '';
         const clashing = illegal ? styles.Clashing_Cell : '';
         const offending = selected && warning ? styles.Offending_Choice : '';
+        const unclickable = correct ? styles.Unclickable : '';
         setClassName([
             styles.Cell,
             selectedClass,
             warningClass,
             clashing,
-            offending].join(' '));
-    }, [selected, warning, illegal])
+            offending,
+            unclickable].join(' '));
+    }, [selected, warning, illegal, correct])
+
+    console.log(className);
 
     // Give small random delay when 'correct' prop changes before 
     // applying the animation style.
@@ -38,7 +42,7 @@ const PuzzleCell = (props) => {
         if (correct) {
             const waitTime = (index % 9) * 30;
             setTimeout(() => {
-                setClassName(`${styles.Cell} ${styles.spin_to_correct}`);
+                setClassName(`${styles.Cell} ${styles.spin_to_correct} ${styles.Unclickable}`);
             }, waitTime);
         }
     }, [correct, index])
