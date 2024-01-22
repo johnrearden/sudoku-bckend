@@ -168,4 +168,4 @@ describe("A PuzzleContainer", () => {
             expect(cells[squareCell]).toHaveClass(styles.Warning);
         }
     })
-})
+p})

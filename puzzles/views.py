@@ -83,8 +83,7 @@ class GetRandomPuzzle(APIView):
 class GetLeaderboard(APIView):
     '''
     A view that returns this instances position in the rankings for its 
-    puzzle, the top 3 in the rankings, and the nearest 4 neighbours (2 above
-    and 2 below)
+    puzzle, the top 5 in the rankings, and the instance itself)
     '''
 
     def get(self, request, instance_id):

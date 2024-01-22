@@ -1,0 +1,236 @@
+[
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 1,
+        "fields": {
+            "nickname": "johnno",
+            "country": "IE",
+            "uuid": "66fc034e-a50d-4a53-b451-8bca706bd437"
+        }
+    },
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 7,
+        "fields": {
+            "nickname": "Johnny10",
+            "country": "IE",
+            "uuid": "136c4b87-89ca-499e-878d-50f198a946d5"
+        }
+    },
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 8,
+        "fields": {
+            "nickname": "Johnny11",
+            "country": "IE",
+            "uuid": "a56d3e4f-1f3a-4337-9830-e2cb16bd563f"
+        }
+    },
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 10,
+        "fields": {
+            "nickname": "Donatello",
+            "country": "IT",
+            "uuid": "d0527959-347f-4cf1-b15c-47a6649d9987"
+        }
+    },
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 26,
+        "fields": {
+            "nickname": "mikey3",
+            "country": "IE",
+            "uuid": "9ac6a675-dc64-48a8-90f8-49de98fcc88c"
+        }
+    },
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 27,
+        "fields": {
+            "nickname": "Paudie",
+            "country": "IE",
+            "uuid": "1da6ef5e-7d50-42ca-8113-603f9a02008b"
+        }
+    },
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 28,
+        "fields": {
+            "nickname": "Mickey Toss",
+            "country": "IE",
+            "uuid": "21bb966d-1434-4fc2-acb7-b2e0a08614da"
+        }
+    },
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 29,
+        "fields": {
+            "nickname": "mikey4",
+            "country": "IE",
+            "uuid": "d6c64433-bbce-4c4e-b359-bcc1c9a70514"
+        }
+    },
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 30,
+        "fields": {
+            "nickname": "mikey5",
+            "country": "AU",
+            "uuid": "bc81f5f1-a839-4236-9b65-1c3846dd7087"
+        }
+    },
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 31,
+        "fields": {
+            "nickname": "johnny2",
+            "country": "IE",
+            "uuid": "422c49c6-635c-42d8-a3f8-9f2a1186289e"
+        }
+    },
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 32,
+        "fields": {
+            "nickname": "tony3",
+            "country": "AF",
+            "uuid": "971e5827-e1a7-42c3-8ac0-406e044edc5b"
+        }
+    },
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 33,
+        "fields": {
+            "nickname": "tommy",
+            "country": "AF",
+            "uuid": "0e119ec6-d1bb-49e2-a600-73cb4aadbb9a"
+        }
+    },
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 34,
+        "fields": {
+            "nickname": "io",
+            "country": "AF",
+            "uuid": "50a31daa-541f-441b-8dd9-d758c760fb61"
+        }
+    },
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 35,
+        "fields": {
+            "nickname": "mooty",
+            "country": "EH",
+            "uuid": "3e9bca6b-6aec-4c40-889d-52c75e9d290a"
+        }
+    },
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 36,
+        "fields": {
+            "nickname": "icky",
+            "country": "RE",
+            "uuid": "c7b774c2-c6ab-4a38-b8e8-35c50554117d"
+        }
+    },
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 37,
+        "fields": {
+            "nickname": "icky2",
+            "country": "AI",
+            "uuid": "37e0a085-5734-4aef-8aa0-02fdca4564b2"
+        }
+    },
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 38,
+        "fields": {
+            "nickname": "toby",
+            "country": "CR",
+            "uuid": "e8ca0521-765f-48a8-babb-f478de3d8758"
+        }
+    },
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 39,
+        "fields": {
+            "nickname": "johnno2",
+            "country": "BD",
+            "uuid": "b642eb81-1489-4c77-8e78-ef418d8935c2"
+        }
+    },
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 40,
+        "fields": {
+            "nickname": "joxer",
+            "country": "IE",
+            "uuid": "fd241f4c-bcbe-466a-b4ac-e305eb7e7c44"
+        }
+    },
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 41,
+        "fields": {
+            "nickname": "S23",
+            "country": "IE",
+            "uuid": "58ea5bf2-2b6a-4d88-ad1a-a1d126d9ed07"
+        }
+    },
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 42,
+        "fields": {
+            "nickname": "mooch",
+            "country": "IR",
+            "uuid": "89565243-5eae-4737-912c-5eecd911d74f"
+        }
+    },
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 43,
+        "fields": {
+            "nickname": "asdfasdfasdf",
+            "country": "AF",
+            "uuid": "9007947e-a783-477f-9f91-2426d4de3170"
+        }
+    },
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 44,
+        "fields": {
+            "nickname": "mooch2",
+            "country": "JE",
+            "uuid": "621746cc-3fb6-4439-a132-8f065ab26f75"
+        }
+    },
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 45,
+        "fields": {
+            "nickname": "Mickey Toss 2",
+            "country": "AF",
+            "uuid": "81521dd5-0dd7-4cec-b946-e1514389c7eb"
+        }
+    },
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 46,
+        "fields": {
+            "nickname": "asdasdfasdf",
+            "country": "AF",
+            "uuid": "64465bb9-4e0e-4bb8-b31f-3cb6e3259527"
+        }
+    },
+    {
+        "model": "player_profile.playerprofile",
+        "pk": 47,
+        "fields": {
+            "nickname": "kikr",
+            "country": "AF",
+            "uuid": "c5a57bcd-5707-4ff5-ab9d-385235f334ec"
+        }
+    }
+]
