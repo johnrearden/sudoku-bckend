@@ -34,8 +34,6 @@ const PuzzleCell = (props) => {
             unclickable].join(' '));
     }, [selected, warning, illegal, correct])
 
-    console.log(className);
-
     // Give small random delay when 'correct' prop changes before 
     // applying the animation style.
     useEffect(() => {
