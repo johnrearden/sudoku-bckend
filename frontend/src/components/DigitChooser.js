@@ -20,6 +20,8 @@ const DigitChooser = (props) => {
         </div>
     )})
 
+    console.log(exhaustedDigits);
+
     return (
         <>
             {buttons}

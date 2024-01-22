@@ -143,7 +143,7 @@ export const getExhaustedDigits = (grid) => {
     }
     for (let i = 1; i <= 10; i++) {
         if (array[i] === 9) {
-            exhaustedDigits.push(i);
+            exhaustedDigits.push(i.toString());
         }
     }
     return exhaustedDigits;

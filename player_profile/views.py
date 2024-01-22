@@ -31,7 +31,6 @@ class RetrievePlayerProfile(APIView):
     def get(self, request):
         profile_cookie = request.COOKIES.get(settings.PLAYER_PROFILE_COOKIE, '')
         profile = get_object_or_404(PlayerProfile, uuid=profile_cookie)
-        #profile = PlayerProfile.objects.filter(uuid=profile_cookie).first()
         serializer = PlayerProfileSerializer(profile)
         return Response(serializer.data)
 
