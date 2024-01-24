@@ -275,11 +275,15 @@ const PuzzleContainer = () => {
                     clashingCell={clashingCell}
                     completed={completeness === 100}
                     />
-                <div className={`${successStyle} text-center`}>
+                <div 
+                    className={`${successStyle} text-center`}
+                    data-cy="success_message_div"    
+                >
                     <h1>Well Done!</h1>
                     <button 
                         className={`${btnStyles.Button} mt-4`}
                         onClick={handleLeaderboardButtonClick}
+                        data-cy="leaderboard_button"
                         >Leaderboard</button>
                     
                 </div>
@@ -325,6 +329,7 @@ const PuzzleContainer = () => {
                 onHide={() => setShowProfileModal(false)}
                 contentClassName={`${styles.ProfileModal} ${themeStyles}`}
                 centered
+                data-cy="profile_modal"
             >
                 <Modal.Body>
                     <ProfileForm callback={profileModalCallback} />

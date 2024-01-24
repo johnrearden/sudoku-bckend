@@ -24,6 +24,7 @@ const ChooseDifficulty = ({ message, fadeIn, square }) => {
         <button
             onClick={handleClick}
             data-difficulty="0"
+            data-cy="difficulty_button"
             className={` ${btnStyles.Button} ${btnStyles.MinWidth}`}
         >Easy</button>
     )
@@ -32,6 +33,7 @@ const ChooseDifficulty = ({ message, fadeIn, square }) => {
         <button
             onClick={handleClick}
             data-difficulty="1"
+            data-cy="difficulty_button"
             className={` ${btnStyles.Button}  ${btnStyles.MinWidth}`}
         >Medium</button>
     )
@@ -40,6 +42,7 @@ const ChooseDifficulty = ({ message, fadeIn, square }) => {
         <button
             onClick={handleClick}
             data-difficulty="2"
+            data-cy="difficulty_button"
             className={` ${btnStyles.Button}  ${btnStyles.MinWidth}`}
         >Tricky</button>
     )
@@ -48,6 +51,7 @@ const ChooseDifficulty = ({ message, fadeIn, square }) => {
         <button
             onClick={handleClick}
             data-difficulty="3"
+            data-cy="difficulty_button"
             className={` ${btnStyles.Button}  ${btnStyles.MinWidth}`}
         >Hard</button>
     )

@@ -90,7 +90,7 @@ const Leaderboard = () => {
     return (
         <>
             <Row className="d-flex justify-content-center mt-3">
-                <h4>Leaderboard</h4>
+                <h4 data-cy="leaderboard_heading">Leaderboard</h4>
             </Row>
             {data && (
                 <Row className="d-flex justify-content-center mt-2">

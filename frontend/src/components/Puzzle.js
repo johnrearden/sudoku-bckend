@@ -48,7 +48,10 @@ const Puzzle = ({
     return (
         <>
             <Row>
-                <div className={styles.Grid}>{cells}</div>
+                <div 
+                    className={styles.Grid}
+                    data-cy="puzzle_component"
+                >{cells}</div>
             </Row>
 
         </>

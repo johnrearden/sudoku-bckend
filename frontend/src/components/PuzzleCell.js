@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import styles from '../styles/PuzzleCell.module.css'
 
+// Testing this component is a little awkward, esp cypress e2e tests, 
+// as the puzzle cells appear (with their test_ids) before the get_random_puzzle
+// request has resolved. If it resolves in the middle of a test, it changes
+// the puzzle cell textContent. Hacked a fix by intercepting the request
+// and responding with dummy puzzle (presumably instantaneous).
+
+// It might be an idea to add a loaded prop to Puzzle and PuzzleCell to
+// mitigate this if this code is used in a non-toy project
+
 const PuzzleCell = (props) => {
 
     const {
