@@ -91,7 +91,6 @@ class GetLeaderboardTest(APITestCase):
     def test_endpoint_returns_5_instances_ranked_by_duration_increasing(self):
         url = '/api/get_leaderboard/354/'
         response = self.client.get(url)
-        print(response.data)
         top_n = response.data['top_n']
         durations = [inst['duration'] for inst in top_n]
 
