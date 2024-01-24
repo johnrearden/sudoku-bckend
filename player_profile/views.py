@@ -19,7 +19,11 @@ class CreatePlayerProfile(APIView):
         if serializer.is_valid(raise_exception=True):
             instance = serializer.save()
             response = Response(status=status.HTTP_201_CREATED)
-            response.set_cookie(key=settings.PLAYER_PROFILE_COOKIE, value=instance.uuid, secure=False)
+            response.set_cookie(
+                key=settings.PLAYER_PROFILE_COOKIE,
+                value=instance.uuid,
+                secure=False,
+                samesite='None')
             response.data = serializer.data
             return response
 
